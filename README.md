@@ -1,1 +1,1 @@
-# GameOfLife_Pants
+# GameOfLife_Plants
