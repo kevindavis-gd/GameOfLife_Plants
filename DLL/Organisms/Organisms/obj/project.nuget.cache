@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "L4yz+XOT/IkLJ2mgO1Kb0KjaDvVEGOQryWebxQxMpdFBNJdyQ5AUG69JnDwa1d9qjz0poPXRhMk3Mnmxls/nVg==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\shylo\\Documents\\GitHub\\GameOfLife_Plants\\DLL\\Organisms\\Organisms\\Organisms.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\shylo\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
+    "C:\\Users\\shylo\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}
