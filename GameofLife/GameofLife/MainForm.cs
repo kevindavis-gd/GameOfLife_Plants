@@ -15,6 +15,7 @@ namespace GameofLife
     public partial class MainForm : Form
     {
         PictureBox[,] grid = new PictureBox[13, 13];
+        int flyNum, deadlyNum, majesticNum = 0;
         public MainForm()
         {
             InitializeComponent();
@@ -23,6 +24,7 @@ namespace GameofLife
         private void MainForm_Load(object sender, EventArgs e)
         {
             //load pictureboxes into array
+            //Very inefficient to rename them all
             grid[0, 0] = pictureBox1;
             grid[0, 1] = pictureBox2;
             grid[0, 2] = pictureBox3;
@@ -82,7 +84,17 @@ namespace GameofLife
 
         private void button1_Click(object sender, EventArgs e)
         {
-           for (int x = 0; x < 13; x++)
+
+            deadlyNum = int.Parse(textBox_DeadlyNum.Text);
+            majesticNum = int.Parse(textBox_MajesticNum.Text);
+            flyNum = int.Parse(textBox_FlyNum.Text);
+
+
+
+
+
+
+            for (int x = 0; x < 13; x++)
             {
                 for (int y = 0; y < 4; y++)
                 {
@@ -93,31 +105,53 @@ namespace GameofLife
             List<Actor> actors = new List<Actor>();
             Random rand = new Random();
 
-            for (int x = 0; x < 10; x ++)
+            for (int x = 0; x < flyNum; x++)
             {
                 //unabe to randomize numbers within the class
-               actors.Add(new Organisms.Fly(rand.Next(4), rand.Next(13)));
-               actors.Add(new Organisms.DeadlyMimic(rand.Next(4), rand.Next(12)));
-               actors.Add(new Organisms.MajesticPlant(rand.Next(4), rand.Next(12)));
+                actors.Add(new Organisms.Fly(rand.Next(4), rand.Next(13)));
+            }
+            for (int x = 0; x < deadlyNum; x++)
+            {
+                //unabe to randomize numbers within the class
+                actors.Add(new Organisms.DeadlyMimic(rand.Next(4), rand.Next(12)));
+            }
+            for (int x = 0; x < majesticNum; x++)
+            {
+                //unabe to randomize numbers within the class
+                actors.Add(new Organisms.MajesticPlant(rand.Next(4), rand.Next(12)));
             }
 
-            foreach ( var acts in actors)
+            foreach (var acts in actors)
             {
                 locationCheck(acts);
-            } 
+            }
         }//buttonClick
 
         public void locationCheck(Actor pic)
         {
             Random rand = new Random();
             //while the position is taken, randomize its position
-            while (grid[pic.PositionX, pic.PositionY].BackColor == Color.Blue)
+            while (grid[pic.PositionX, pic.PositionY].BackColor != Color.Red)
             {
                 pic.PositionX = rand.Next(4);
                 pic.PositionY = rand.Next(13);
             }//while
-            
-            grid[pic.PositionX, pic.PositionY].BackColor = Color.Blue;
+
+            if (pic.GetType() == typeof(Organisms.MajesticPlant))
+            {
+                grid[pic.PositionX, pic.PositionY].BackColor = Color.Green;
+            }
+            else if (pic.GetType() == typeof(Organisms.DeadlyMimic))
+            {
+                grid[pic.PositionX, pic.PositionY].BackColor = Color.Purple;
+            }
+            else if (pic.GetType() == typeof(Organisms.Fly))
+            {
+                grid[pic.PositionX, pic.PositionY].BackColor = Color.Yellow;
+            }
+
+
+            //Console.WriteLine(typeof(Organisms.Fly));
         }//locationCheck
     }
 }
