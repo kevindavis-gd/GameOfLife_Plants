@@ -1,0 +1,9 @@
+C:\Users\shylo\Documents\GitHub\GameOfLife_Plants\DLL\Organisms\Organisms\bin\Debug\netstandard2.0\Organisms.deps.json
+C:\Users\shylo\Documents\GitHub\GameOfLife_Plants\DLL\Organisms\Organisms\bin\Debug\netstandard2.0\Organisms.dll
+C:\Users\shylo\Documents\GitHub\GameOfLife_Plants\DLL\Organisms\Organisms\bin\Debug\netstandard2.0\Organisms.pdb
+C:\Users\shylo\Documents\GitHub\GameOfLife_Plants\DLL\Organisms\Organisms\obj\Debug\netstandard2.0\Organisms.AssemblyInfoInputs.cache
+C:\Users\shylo\Documents\GitHub\GameOfLife_Plants\DLL\Organisms\Organisms\obj\Debug\netstandard2.0\Organisms.AssemblyInfo.cs
+C:\Users\shylo\Documents\GitHub\GameOfLife_Plants\DLL\Organisms\Organisms\obj\Debug\netstandard2.0\Organisms.csproj.CoreCompileInputs.cache
+C:\Users\shylo\Documents\GitHub\GameOfLife_Plants\DLL\Organisms\Organisms\obj\Debug\netstandard2.0\Organisms.dll
+C:\Users\shylo\Documents\GitHub\GameOfLife_Plants\DLL\Organisms\Organisms\obj\Debug\netstandard2.0\Organisms.pdb
+C:\Users\shylo\Documents\GitHub\GameOfLife_Plants\DLL\Organisms\Organisms\obj\Debug\netstandard2.0\Organisms.csprojAssemblyReference.cache

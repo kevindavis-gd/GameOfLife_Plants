@@ -4,32 +4,39 @@ using System.Text;
 
 namespace Organisms
 {
+   
     public abstract class Actor
     {
-        private int generationsToLive = 0;
-        private int positionX, positionY = 0;
+        //public static int gridrows;
+        //public static int gridcols;
+        //private int generationsToLive; //number of iterations to live
+       // private int positionX, positionY; // location on screen
+
+        /// ******************************************** Properties *********************************
+        public abstract int GenerationsToLive
+        {
+            get;
+            set;
+        }
+        public abstract int PositionX
+        {
+            get;
+            set;
+        }
+        public abstract int PositionY
+        {
+            get;
+            set;
+        }
+        /// ******************************************** Methods ************************************
+
         //virtial methods
-        public virtual void Move() { }
-        public virtual void Die() { }
-        //Abstract methods
-        public abstract void Draw();
+        public virtual void Move(int x, int y)
+        {
+        }//Move
+        public abstract string Draw();
 
 
-        public virtual int PositionX
-        {
-            get;
-            set;
-        }
-        public virtual int PositionY
-        {
-            get;
-            set;
-        }
-        public virtual int GenerationsToLive
-        {
-            get;
-            set;
-        }
 
     }//Actor
 }
