@@ -1,34 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Drawing;
 
 namespace Organisms
 {
     public class Fly : Actor
     {
         static int count = 0;
-        
-        private int generationsToLive = 5; //number of iterations to live
-        private int positionX, positionY = 0; // location on screen
-
-
         /// ******************************************** Properties *********************************
-        public override int GenerationsToLive
-        {
-            get { return generationsToLive; }
-            set { generationsToLive = value; }
-        }//GenerationsToLive
-        public override int PositionX
-        {
-            get { return positionX; }
-            set { positionX = value; }
-        }//PositionX
-        public override int PositionY
-        {
-            get { return positionY; }
-            set { positionY = value; }
-        }//PositionY
-        public int Count
+        public override int Count
         {
             get { return count; }
         }//Count
@@ -39,13 +20,13 @@ namespace Organisms
             //increase the count
             count++;
             GenerationsToLive = 5;
-            positionX = x;
-            positionY = y;
+            PositionX = x;
+            PositionY = y;
         }   //Constructor
-        public override void Move(int x, int y)
+        public void Move(int x, int y)
         {
-            positionX = x;
-            positionY = y;
+            PositionX = x;
+            PositionY = y;
         }//Move
 
         public void Eat()

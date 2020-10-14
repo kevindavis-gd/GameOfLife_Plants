@@ -1,42 +1,39 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Drawing;
 
 namespace Organisms
 {
    
     public abstract class Actor
     {
-        //public static int gridrows;
-        //public static int gridcols;
-        //private int generationsToLive; //number of iterations to live
-       // private int positionX, positionY; // location on screen
+        private int generationsToLive; //number of iterations to live
+        private int positionX, positionY; // location on screen
 
         /// ******************************************** Properties *********************************
-        public abstract int GenerationsToLive
+        public int GenerationsToLive
+        {
+            get { return generationsToLive; }
+            set { generationsToLive = value; }
+        }//GenerationsToLive
+        public int PositionX
+        {
+            get { return positionX; }
+            set { positionX = value; }
+        }//PositionX
+        public int PositionY
+        {
+            get { return positionY; }
+            set { positionY = value; }
+        }//PositionY
+        public abstract int Count
         {
             get;
-            set;
-        }
-        public abstract int PositionX
-        {
-            get;
-            set;
-        }
-        public abstract int PositionY
-        {
-            get;
-            set;
         }
         /// ******************************************** Methods ************************************
 
-        //virtial methods
-        public virtual void Move(int x, int y)
-        {
-        }//Move
         public abstract string Draw();
-
-
 
     }//Actor
 }
