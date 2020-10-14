@@ -10,12 +10,25 @@ namespace GameofLife
 {
     class Data
     {
-        List<Actor> actors = new List<Actor>();
+        
+        
+        List<Fly> fly = new List<Fly>();
+        List<MajesticPlant> plants = new List<MajesticPlant>();
+        List<DeadlyMimic> deadly = new List<DeadlyMimic>();
+
         Random rand = new Random();
 
-        public List<Actor> Actors
+        public List<MajesticPlant> Plants
         {
-            get { return actors; }
+            get { return plants; }
+        }
+        public List<Fly> Fly
+        {
+            get { return fly; }
+        }
+        public List<DeadlyMimic> Deadly
+        {
+            get { return deadly; }
         }
 
         public Data()
@@ -23,26 +36,33 @@ namespace GameofLife
             
         }//constructor
 
-        public void FillList(int flyNum, int deadlyNum, int majesticNum)
+        public void FillList(int flyNum, int deadlyNum, int majesticNum, int gridSizeX, int gridSizeY)
         {
             for (int x = 0; x < flyNum; x++)
             {
-                actors.Add(new Organisms.Fly(rand.Next(4), rand.Next(13)));
+                fly.Add(new Organisms.Fly(rand.Next(gridSizeX), rand.Next(gridSizeY)));
             }
             for (int x = 0; x < deadlyNum; x++)
             {
-                actors.Add(new Organisms.DeadlyMimic(rand.Next(4), rand.Next(12)));
+                deadly.Add(new Organisms.DeadlyMimic(rand.Next(gridSizeX), rand.Next(gridSizeY)));
             }
             for (int x = 0; x < majesticNum; x++)
             {
-                actors.Add(new Organisms.MajesticPlant(rand.Next(4), rand.Next(12)));
+                plants.Add(new Organisms.MajesticPlant(rand.Next(gridSizeX), rand.Next(gridSizeY)));
             }
         }//FillList
         
 
-        public void AddActor(Actor child)
-        {
-            actors.Append(child);
+        public void AddPlant(MajesticPlant child, int gridSizeX, int gridSizeY)
+        {   
+            //if table is full do not allow new organisms
+            if (Plants.Count + Deadly.Count + Fly.Count < gridSizeX * gridSizeY)
+            {
+                child.PositionX = rand.Next(gridSizeX);
+                child.PositionY = rand.Next(gridSizeY);
+                plants.Add(child);
+            }
+            
         }//AddActor
 
     }
