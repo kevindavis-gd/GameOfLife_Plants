@@ -46,22 +46,14 @@ namespace GameofLife
                 //if there are too many organisms to fit on the board use default values
                 if ((populationMax = deadlyNum + majesticNum + flyNum) > (gridSizeX * gridSizeY))
                 {
-                    MessageBox.Show("Too Many Organisms, Replacing With Default Values", "Info");
-                    deadlyNum = 5;
-                    majesticNum = 5;
-                    flyNum = 5;
-                    gridSizeX = 5;
-                    gridSizeY = 5;
-                }
+                    DefaultValues();
+                }//if
                 grid = new PictureBox[gridSizeX, gridSizeY];
-            }
+            }//try
             catch (FormatException)
             {
                 MessageBox.Show("Whole Numbers Only!", "Error");
-               // InputVisible(true); //not working ??????????????????????
-            }
-            //remove input boxes etc
-            //InputVisible(false);
+            }//catch
             //Show the Picture Grid
             LoadEmptyPictureGrid(gridSizeX, gridSizeY);
             //change the color of empty cells
@@ -69,18 +61,31 @@ namespace GameofLife
             //create the data structure to hold the actors
             DataStructure = new Data();
             //fill a structure with requested actors
-            //DataStructure.FillList(flyNum, deadlyNum, majesticNum, gridSizeX, gridSizeY);
-            //GridPlacement();
-            DataStructure.Fill2DArray(flyNum, deadlyNum, majesticNum, gridSizeX, gridSizeY);
+            //DataStructure.Fill2DArray(flyNum, deadlyNum, majesticNum, gridSizeX, gridSizeY);
+            DataStructure.Flies.Add(new Organisms.Fly(3, 3));
+            DataStructure.Actors[3, 3] = DataStructure.Flies[0];
+            LoadPictures();
+        }//LoadButton_click
+
+        private void button_Next_Click(object sender, EventArgs e)
+        {
+            ClearGrid(Color.Red);
+            DataStructure.Move(gridSizeX, gridSizeY);
+            LoadPictures();
+            // DataStructure.AddPlant((Organisms.MajesticPlant)DataStructure.Actors[1,1].Pollinate(), gridSizeX, gridSizeY);
+        }//button_next_click
+
+        public void LoadPictures()
+        {
             for (int x = 0; x < gridSizeX; x++)
             {
                 for (int y = 0; y < gridSizeY; y++)
                 {
-                    if (DataStructure.Actors[x,y] != null)
+                    if (DataStructure.Actors[x, y] != null)
                     {
                         if (DataStructure.Actors[x, y].GetType() == typeof(Organisms.DeadlyMimic))
                         {
-                            grid[x,y].Image = GameofLife.Properties.Resources.Deadly_Mimic1;
+                            grid[x, y].Image = GameofLife.Properties.Resources.Deadly_Mimic1;
                         }
                         else if (DataStructure.Actors[x, y].GetType() == typeof(Organisms.Fly))
                         {
@@ -90,34 +95,58 @@ namespace GameofLife
                         {
                             grid[x, y].Image = GameofLife.Properties.Resources.Plant1;
                         }
-                    }
-                }
-            }
-        }//LoadButton_click
-        private void button_Next_Click(object sender, EventArgs e)
+                    }//if
+                }//innerFor
+            }//outerFor
+        }//LoadPictures
+
+        public void DefaultValues()
         {
-            ClearGrid(Color.Red);
-            //DataStructure.AddPlant(DataStructure.Plants[1].Pollinate(), gridSizeX, gridSizeY);
-           // Console.WriteLine(DataStructure.Plants.Count);
-            //FlyMovement();
+            MessageBox.Show("Too Many Organisms, Replacing With Default Values", "Info");
+            deadlyNum = 5;
+            majesticNum = 5;
+            flyNum = 5;
+            gridSizeX = 5;
+            gridSizeY = 5;
+        }//DefaultValues
 
-
-        }//button_next_click
-
-        public void InputVisible(bool vis)
+        public void ClearGrid(Color color)
         {
-            label_Cols.Visible = vis;
-            label_Rows.Visible = vis;
-            label_DeadlyNums.Visible = vis;
-            label_FlyNum.Visible = vis;
-            label_MajesticNum.Visible = vis;
-            textBox_Columns.Visible = vis;
-            textBox_DeadlyNum.Visible = vis;
-            textBox_FlyNum.Visible = vis;
-            textBox_MajesticNum.Visible = vis;
-            textBox_Rows.Visible = vis;
-            LoadDataButton.Visible = vis;
-        }
+            for (int x = 0; x < gridSizeX; x++)
+            {
+                for (int y = 0; y < gridSizeY; y++)
+                {
+                    grid[x, y].BackColor = color;
+                    grid[x, y].Image = null;
+                }//innerFor
+            }//outerFor
+        }//SetGridColor
+
+        public void LoadEmptyPictureGrid(int NumOfRows, int NumOfCols)
+        {
+            for (int x = 0; x < NumOfRows; x++)
+            {
+                for (int y = 0; y < NumOfCols; y++)
+                {
+                    //place anonymous picture box object in grid cells
+                    grid[x, y] = new PictureBox
+                    {   //set empty cells background color
+                        BackColor = Color.Red,
+                        //increment the location the picturebox bases on the iteration
+                        Location = new Point(50 * y, 100 + 50 * x),
+                        Size = new System.Drawing.Size(50, 50),
+                        BorderStyle = BorderStyle.Fixed3D,
+                        Anchor = AnchorStyles.Left,
+                    };//grid
+                    //add the picturebox object to this form
+                    this.Controls.Add(grid[x, y]);
+                }//innerFor
+            }//outerFor
+        }//LoadPictureGrid
+
+
+
+
 
         /*
         public void FlyMovement()
@@ -138,40 +167,33 @@ namespace GameofLife
             }
         }//FlyMovement
         */
-        public void ClearGrid(Color color)
-        {
-            for (int x = 0; x < gridSizeX; x++)
-            {
-                for (int y = 0; y < gridSizeY; y++)
-                {
-                    grid[x, y].BackColor = color;
-                    grid[x, y].Image = null;
-                }//innerFor
-            }//outerFor
 
-        }//SetGridColor
 
-        public void LoadEmptyPictureGrid(int NumOfRows, int NumOfCols)
-        {
-            for (int x = 0; x < NumOfRows; x++)
-            {
-                for (int y = 0; y < NumOfRows; y++)
-                {
-                    //place anonymous picture box object in grid cells
-                    grid[x, y] = new PictureBox
-                    {   //set empty cells background color
-                        BackColor = Color.Red,
-                        //increment the location the picturebox bases on the iteration
-                        Location = new Point(50 * x, 100 + 50 * y),
-                        Size = new System.Drawing.Size(50, 50),
-                        BorderStyle = BorderStyle.Fixed3D,
-                        Anchor = AnchorStyles.Left,
-                    };
-                    //add the picturebox object to this form
-                    this.Controls.Add(grid[x, y]);
-                }
-            }
-        }//LoadPictureGrid
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         public void RandomGridPlacement(Actor picture)
         {
             Random rand = new Random();

@@ -11,9 +11,10 @@ namespace GameofLife
 {
     class Data
     {
-        Actor[,] actors;
+        Actor[,] actors = new Actor[5,5];
         Random rand;
         int organismCount;
+        public List<Actor> Flies = new List<Actor>();
         ///************************************************* Properties *******************************************
         public Actor[,] Actors
         {
@@ -34,6 +35,7 @@ namespace GameofLife
             for (int x = 0; x < flyNum; x++)
             {
                 temp = new Organisms.Fly(rand.Next(gridSizeX), rand.Next(gridSizeY));
+                Flies.Add(temp);
                 //inset organism randomly into the actors 2D array
                 RandomInsert(temp, gridSizeX, gridSizeY);
             }
@@ -69,5 +71,80 @@ namespace GameofLife
                 organismCount++;
             }//if
         }//RandomInsert
-    }
+
+        
+        public void Move(int gridSizeX, int gridSizeY)
+        {
+            foreach ( var fly in Flies)
+            {
+                Console.WriteLine("Stage 1");
+
+                actors[fly.PositionX % gridSizeX, fly.PositionY % gridSizeY] = null;
+
+                int xpos;
+                do
+                {
+                    xpos = rand.Next(-1, 2);
+                } while (xpos == 0);
+
+                int ypos;
+                do
+                {
+                    ypos = rand.Next(-1, 2);
+                } while (ypos == 0);
+
+                fly.PositionX += xpos;
+                fly.PositionY += ypos;
+
+                if (fly.PositionX < 0)
+                {
+                    fly.PositionX *= -1;
+                    Console.WriteLine("Convert");
+                }
+
+
+                if (fly.PositionY < 0)
+                {
+                    fly.PositionY *= -1;
+                    Console.WriteLine("Convert");
+                }
+
+
+                Console.WriteLine("X: " + xpos + "....... " + fly.PositionX);
+                Console.WriteLine("Y: " + ypos + "......." +fly.PositionY);
+
+                //place actor into its new position mod the grid sizes so that it will wrap around
+                actors[fly.PositionX % gridSizeX, fly.PositionY % gridSizeY] = fly;
+
+                Console.WriteLine("Stage 2");
+            }
+            /*
+             for (int x = 0; x < gridSizeX; x++)
+             {
+                 for (int y = 0; y < gridSizeY; y++)
+                 {
+                     if (actors[x, y] != null && actors[x, y].GetType() == typeof(Organisms.Fly))
+                     {
+                         step++;
+                         // copy actor to a temperory object
+                         Actor temp = actors[x, y];
+                         //set actor in array to null
+                         actors[x, y] = null;
+                         temp.PositionX +=rand.Next(-1, 2) % gridSizeX;
+                         temp.PositionY +=rand.Next(-1, 2) % gridSizeY;
+                         Console.WriteLine();
+                         Console.Write("X:" + temp.PositionX);
+                         Console.Write(",");
+                         Console.Write("Y:" + temp.PositionY + " " + step + " Steps");
+
+                         //place actor into its new position mod the grid sizes so that it will wrap around
+                         actors[temp.PositionX, temp.PositionY] = temp;
+
+                     }
+
+                 }//innerFor
+             }//outerFor
+            */
+        }
+    }//Class Data
 }

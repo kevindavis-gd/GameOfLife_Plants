@@ -25,8 +25,8 @@ namespace Organisms
         }   //Constructor
         public void Move(int x, int y)
         {
-            PositionX = x;
-            PositionY = y;
+            PositionX += x;
+            PositionY += y;
         }//Move
 
         public void Eat()
