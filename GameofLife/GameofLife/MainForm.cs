@@ -69,15 +69,37 @@ namespace GameofLife
             //create the data structure to hold the actors
             DataStructure = new Data();
             //fill a structure with requested actors
-            DataStructure.FillList(flyNum, deadlyNum, majesticNum, gridSizeX, gridSizeY);
-            GridPlacement();
+            //DataStructure.FillList(flyNum, deadlyNum, majesticNum, gridSizeX, gridSizeY);
+            //GridPlacement();
+            DataStructure.Fill2DArray(flyNum, deadlyNum, majesticNum, gridSizeX, gridSizeY);
+            for (int x = 0; x < gridSizeX; x++)
+            {
+                for (int y = 0; y < gridSizeY; y++)
+                {
+                    if (DataStructure.Actors[x,y] != null)
+                    {
+                        if (DataStructure.Actors[x, y].GetType() == typeof(Organisms.DeadlyMimic))
+                        {
+                            grid[x,y].Image = GameofLife.Properties.Resources.Deadly_Mimic1;
+                        }
+                        else if (DataStructure.Actors[x, y].GetType() == typeof(Organisms.Fly))
+                        {
+                            grid[x, y].Image = GameofLife.Properties.Resources.Fly1;
+                        }
+                        else if (DataStructure.Actors[x, y].GetType() == typeof(Organisms.MajesticPlant))
+                        {
+                            grid[x, y].Image = GameofLife.Properties.Resources.Plant1;
+                        }
+                    }
+                }
+            }
         }//LoadButton_click
         private void button_Next_Click(object sender, EventArgs e)
         {
             ClearGrid(Color.Red);
             //DataStructure.AddPlant(DataStructure.Plants[1].Pollinate(), gridSizeX, gridSizeY);
            // Console.WriteLine(DataStructure.Plants.Count);
-            FlyMovement();
+            //FlyMovement();
 
 
         }//button_next_click
@@ -97,7 +119,7 @@ namespace GameofLife
             LoadDataButton.Visible = vis;
         }
 
-
+        /*
         public void FlyMovement()
         {
             //randomize placement of plants
@@ -115,23 +137,7 @@ namespace GameofLife
                 RandomFlysOnly(actor);
             }
         }//FlyMovement
-        public void GridPlacement()
-        {
-            //randomize placement of plants
-            foreach (var actor in DataStructure.Plants)
-            {
-                RandomGridPlacement(actor);
-            }
-            foreach (var actor in DataStructure.Deadly)
-            {
-                RandomGridPlacement(actor);
-            }
-            //animals came on this earth last
-            foreach (var actor in DataStructure.Fly)
-            {
-                RandomGridPlacement(actor);
-            }
-        }
+        */
         public void ClearGrid(Color color)
         {
             for (int x = 0; x < gridSizeX; x++)
