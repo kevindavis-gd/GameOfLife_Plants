@@ -15,36 +15,30 @@ namespace GameofLife
 {
     public partial class MainForm : Form
     {
-        int populationMax = 0;
+        
 
         int flyNum, deadlyNum, majesticNum, gridSizeX, gridSizeY = 0;
         PictureBox[,] grid;
         Data DataStructure;
-
-        public int PopulationMax
-        {
-            get { return populationMax; }
-        }
-
         public MainForm()
         {
             InitializeComponent();
         }
-
         private void MainForm_Load(object sender, EventArgs e)
         {
         }
         private void LoadButton_click(object sender, EventArgs e)
-        {   //exception handling
+        {
+            //exception handling
             try
             {
                 deadlyNum = int.Parse(textBox_DeadlyNum.Text);
                 majesticNum = int.Parse(textBox_MajesticNum.Text);
-                flyNum = int.Parse(textBox_FlyNum.Text);
+                flyNum =  int.Parse(textBox_FlyNum.Text);
                 gridSizeX = int.Parse(textBox_Rows.Text);
                 gridSizeY = int.Parse(textBox_Columns.Text);
                 //if there are too many organisms to fit on the board use default values
-                if ((populationMax = deadlyNum + majesticNum + flyNum) > (gridSizeX * gridSizeY))
+                if ((deadlyNum + majesticNum + flyNum) > (gridSizeX * gridSizeY))
                 {
                     DefaultValues();
                 }//if
@@ -61,20 +55,37 @@ namespace GameofLife
             //create the data structure to hold the actors
             DataStructure = new Data();
             //fill a structure with requested actors
-            //DataStructure.Fill2DArray(flyNum, deadlyNum, majesticNum, gridSizeX, gridSizeY);
+            DataStructure.OrganismCountInitilize(deadlyNum, flyNum, majesticNum);
+            DataStructure.Fill2DArray(flyNum, deadlyNum, majesticNum, gridSizeX, gridSizeY);
+            /*
             DataStructure.Flies.Add(new Organisms.Fly(3, 3));
             DataStructure.Actors[3, 3] = DataStructure.Flies[0];
+            DataStructure.Actors[0, 2] = new Organisms.DeadlyMimic(0,2);
+            //DataStructure.Actors[3, 2] = new Organisms.DeadlyMimic(3, 2);
+            DataStructure.Actors[3, 1] = new Organisms.DeadlyMimic(4, 1);
+            DataStructure.Actors[0, 4] = new Organisms.MajesticPlant(0, 4);
+            DataStructure.Actors[2, 1] = new Organisms.MajesticPlant(2, 1);
+            DataStructure.Actors[1, 4] = new Organisms.MajesticPlant(1, 4);
+            */
             LoadPictures();
+            label_DeadlyCount.Text = "Deadly Mimics Left: " + DataStructure.DeadlyCount;
+            label_FlyCount.Text = "Flys Left: " + DataStructure.FlyCount;
+            label_MajesticCount.Text = "Majestic Plant Left: " + DataStructure.MajesticCount;
         }//LoadButton_click
-
+        
         private void button_Next_Click(object sender, EventArgs e)
         {
             ClearGrid(Color.Red);
             DataStructure.Move(gridSizeX, gridSizeY);
             LoadPictures();
             // DataStructure.AddPlant((Organisms.MajesticPlant)DataStructure.Actors[1,1].Pollinate(), gridSizeX, gridSizeY);
-        }//button_next_click
 
+            //Display organism count
+            label_DeadlyCount.Text = "Deadly Mimics Left: " + DataStructure.DeadlyCount;
+            label_FlyCount.Text = "Flys Left: " + DataStructure.FlyCount;
+            label_MajesticCount.Text = "Majestic Plant Left: " + DataStructure.MajesticCount;
+        }//button_next_click
+        //*******************************************************Load Pictures ****************************************
         public void LoadPictures()
         {
             for (int x = 0; x < gridSizeX; x++)
@@ -86,18 +97,22 @@ namespace GameofLife
                         if (DataStructure.Actors[x, y].GetType() == typeof(Organisms.DeadlyMimic))
                         {
                             grid[x, y].Image = GameofLife.Properties.Resources.Deadly_Mimic1;
-                        }
-                        else if (DataStructure.Actors[x, y].GetType() == typeof(Organisms.Fly))
-                        {
-                            grid[x, y].Image = GameofLife.Properties.Resources.Fly1;
-                        }
-                        else if (DataStructure.Actors[x, y].GetType() == typeof(Organisms.MajesticPlant))
+                            
+                        }  
+                        if (DataStructure.Actors[x, y].GetType() == typeof(Organisms.MajesticPlant))
                         {
                             grid[x, y].Image = GameofLife.Properties.Resources.Plant1;
-                        }
+                        }  
+                        if (DataStructure.Actors[x, y].GetType() == typeof(Organisms.Fly))
+                        {
+                            grid[x, y].Image = GameofLife.Properties.Resources.Fly1;
+                            Console.WriteLine("" + x + " " + y);
+                        } 
                     }//if
                 }//innerFor
+                
             }//outerFor
+            Console.WriteLine("-----------");
         }//LoadPictures
 
         public void DefaultValues()
@@ -142,123 +157,6 @@ namespace GameofLife
                     this.Controls.Add(grid[x, y]);
                 }//innerFor
             }//outerFor
-        }//LoadPictureGrid
-
-
-
-
-
-        /*
-        public void FlyMovement()
-        {
-            //randomize placement of plants
-            foreach (var actor in DataStructure.Plants)
-            {
-                RandomFlysOnly(actor);
-            }
-            //animals came on this earth last
-            foreach (var actor in DataStructure.Fly)
-            {
-                RandomFlysOnly(actor);
-            }
-            foreach (var actor in DataStructure.Deadly)
-            {
-                RandomFlysOnly(actor);
-            }
-        }//FlyMovement
-        */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        public void RandomGridPlacement(Actor picture)
-        {
-            Random rand = new Random();
-            //while the position is taken, randomize its position
-            while (grid[picture.PositionX, picture.PositionY].BackColor != Color.Red)
-            {
-                //randomize position of object's X and Y position
-                picture.PositionX = rand.Next(gridSizeX);
-                picture.PositionY = rand.Next(gridSizeY);
-            }//while
-            if (picture.GetType() == typeof(Organisms.MajesticPlant))
-            {
-                //change the background colour to represent Majestic Plant
-                grid[picture.PositionX, picture.PositionY].BackColor = Color.Green;
-                //set picture in the grid based on the object's X and Y position
-                grid[picture.PositionX, picture.PositionY].Image = GameofLife.Properties.Resources.Plant;
-            }
-            else if (picture.GetType() == typeof(Organisms.DeadlyMimic))
-            {
-                //change the background colour to represent DeadlyMimic
-                grid[picture.PositionX, picture.PositionY].BackColor = Color.Purple;
-                grid[picture.PositionX, picture.PositionY].Image = GameofLife.Properties.Resources.Deadly_Mimic1;
-            }
-            else if (picture.GetType() == typeof(Organisms.Fly))
-            {
-                //change the background colour to represent Fly
-                grid[picture.PositionX, picture.PositionY].BackColor = Color.Yellow;
-                grid[picture.PositionX, picture.PositionY].Image = GameofLife.Properties.Resources.Fly1;
-            }
-        }//RandomGridPlacement
-
-        public void RandomFlysOnly(Actor picture)
-        {
-            Random rand = new Random();
-            //while the position is taken, randomize its position
-
-            if (picture.GetType() == typeof(Organisms.MajesticPlant))
-            {
-                //change the background colour to represent Majestic Plant
-                grid[picture.PositionX, picture.PositionY].BackColor = Color.Green;
-                //set picture in the grid based on the object's X and Y position
-                grid[picture.PositionX, picture.PositionY].Image = GameofLife.Properties.Resources.Plant;
-            }
-            else if (picture.GetType() == typeof(Organisms.DeadlyMimic))
-            {
-                //change the background colour to represent DeadlyMimic
-                grid[picture.PositionX, picture.PositionY].BackColor = Color.Purple;
-                grid[picture.PositionX, picture.PositionY].Image = GameofLife.Properties.Resources.Deadly_Mimic1;
-            }
-            else if (picture.GetType() == typeof(Organisms.Fly))
-            {
-                picture.PositionX = rand.Next(gridSizeX);
-                picture.PositionY = rand.Next(gridSizeY);
-
-                while (grid[picture.PositionX, picture.PositionY].BackColor != Color.Red)
-                {
-                    //randomize position of object's X and Y position
-                    picture.PositionX = rand.Next(gridSizeX);
-                    picture.PositionY = rand.Next(gridSizeY);
-                }//while
-
-                //change the background colour to represent Fly
-                grid[picture.PositionX, picture.PositionY].BackColor = Color.Yellow;
-                grid[picture.PositionX, picture.PositionY].Image = GameofLife.Properties.Resources.Fly1;
-            }
-        }//RandomGridPlacement
+        }//LoadPictureGrid\
     }//MainForm
 }

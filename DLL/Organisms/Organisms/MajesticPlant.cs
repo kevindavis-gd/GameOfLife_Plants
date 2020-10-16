@@ -4,38 +4,58 @@ using System.Text;
 
 namespace Organisms
 {
-    public class MajesticPlant : Actor
+    public class MajesticPlant : Plant
     {
+        int life, size, positionX, positionY;
         static int count = 0;
         /// ******************************************** Properties *********************************
         public override int Count
         {
             get { return count; }
-        }//Count
+        }
+        public override int Life
+        {
+            get { return life; }
+        }
+        public override int Size
+        {
+            get { return size; }
+        }
+
+        public override int PositionX
+        {
+            get { return positionX; }
+            set { positionX = value; }
+        }
+        public override int PositionY
+        {
+            get { return positionY; }
+            set { positionY = value; }
+        }
         /// ******************************************** Methods ************************************
         public MajesticPlant(int x, int y)
         {
             //increase the count
             count++;
-            GenerationsToLive = 2;
+            life = 2;//can live forever
+            size = 0;
             PositionX = x;
             PositionY = y;
         }   //Constructor
-        public virtual MajesticPlant Pollinate()
+        public MajesticPlant Pollinate()
         {
-            MajesticPlant child = Sprout();
+            MajesticPlant child = new MajesticPlant(0, 0);//sprout
             return child;
         }//Pollinate
-        public MajesticPlant Sprout()
+
+        public override void Grow()
         {
-            Random rand = new Random();
-            MajesticPlant child = new MajesticPlant(rand.Next(4), rand.Next(13));
-            return child;
-        }//Sprout
-        public override string Draw()
+            size++;
+        }
+        ~MajesticPlant()
         {
-            return "P";
-        }//Draw
+            count--;
+        }//destructor
     }//MajesticPlant
 }
 

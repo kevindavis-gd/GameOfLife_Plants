@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Drawing;
 
 namespace Organisms
 {
-
-    public abstract class Actor
+    public abstract class Plant : Actor
     {
+
         /// ******************************************** Properties *********************************
-        public abstract int Life { get; }
-        public abstract int PositionX { get; set; }
-        public abstract int PositionY { get; set; }
-        public abstract int Count //abstract property
+
+        public override int Count //abstract property
+        {
+            get { return 0; }
+        }
+        public abstract int Size
         {
             get;
         }
         /// ******************************************** Methods ************************************
-    }//Actor
+        public abstract void Grow();
+    }
 }
