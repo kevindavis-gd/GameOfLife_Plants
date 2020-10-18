@@ -13,28 +13,27 @@ namespace GameofLife
 {
     class Data
     {
-        Actor[,] actors; //= new Actor[5, 5];
+        Actor[,] actors;
         Random rand;
-        int organismCount;
         int deadlyCount, flyCount, majesticCount;
         public List<Actor> Flies = new List<Actor>();
         ///************************************************* Properties *******************************************
         public int DeadlyCount
         {
             get { return deadlyCount; }
+            set { deadlyCount = value; }
         }
         public int FlyCount
         {
             get { return flyCount; }
+            set { flyCount = value; }
         }
         public int MajesticCount
         {
             get { return majesticCount; }
+            set { majesticCount = value; }
         }
-        public int OrganismCount
-        {
-            get { return organismCount; }
-        }
+        
         public Actor[,] Actors
         {
             get { return actors; }
@@ -44,15 +43,9 @@ namespace GameofLife
         {
             rand = new Random();
         }//constructor
+
         ///************************************************* Fill 2D Array *******************************************
 
-        public void OrganismCountInitilize(int Deadly, int Fly, int Plant)
-        {
-            deadlyCount = Deadly;
-            flyCount = Fly;
-            majesticCount = Plant;
-            organismCount = Deadly + Fly + Plant;
-        }
         public void Fill2DArray(int flyNum, int deadlyNum, int majesticNum, int gridSizeX, int gridSizeY)
         {
             //create array the same size as the grid
@@ -80,23 +73,14 @@ namespace GameofLife
         ///************************************************* Add Plant *******************************************
         public void AddPlant(MajesticPlant child, int gridSizeX, int gridSizeY)
         {
-            if (organismCount < gridSizeX * gridSizeY)
-            {
-                majesticCount++;
-                organismCount++;
                 //randomly insert child onto grid
                 RandomInsert(child, gridSizeX, gridSizeY);
-            }
-            else 
-            {
-                Console.WriteLine("full");
-                child = null;
-            }
+            
         }//AddPlant
         ///************************************************* Random Insert *******************************************
         public void RandomInsert(Actor temp, int gridSizeX, int gridSizeY)
         {   //if the grid can hold more organisms
-            if (organismCount < gridSizeX * gridSizeY)
+            if (deadlyCount + flyCount + majesticCount < gridSizeX * gridSizeY)
             {
                 //while the array position is taken, randomize object's position
                 while (actors[temp.PositionX, temp.PositionY] != null)
@@ -111,18 +95,19 @@ namespace GameofLife
             else
             {
                 temp = null;
+                Console.WriteLine("_-_-_-_-_-_-_-_-_-_-_-_-_-Grid is Full, New plant is going to be killed");
             }
         }//RandomInsert
-        ///************************************************* Move *******************************************
-        public void Move(int gridSizeX, int gridSizeY)
+        ///************************************************* Move Flies *******************************************
+        public void MoveFlies(int gridSizeX, int gridSizeY)
         {
             int originalX = 0;
             int originalY = 0;
             int newPosX;
             int newPosY;
+            //only goes through the list of flies
             for (int x = 0; x < Flies.Count; x++)
             {
-                //decrement life ??????????????????????????????????????????????????????
                 //delete the fly from the 2D array
                 actors[Flies[x].PositionX % gridSizeX, Flies[x].PositionY % gridSizeY] = null;
                 //store original values to use incase there is a colision that isnt with a deadly mimic
@@ -134,41 +119,50 @@ namespace GameofLife
                 newPosX = Flies[x].PositionX % gridSizeX;
                 newPosY = Flies[x].PositionY % gridSizeY;
 
+                //if actor position is null skip
                 if (actors[newPosX, newPosY] != null)
                 {
-                    
+                    //if the fly collided with a majestic fly, keep original position
                     if (actors[newPosX, newPosY].GetType() == typeof(Organisms.MajesticPlant))
                     {
-                        Console.WriteLine("Plant");
+                        Console.WriteLine("------------------------------- Fly Colided With a Majestic Plant");
                         ((Fly)Flies[x]).Eat();
+                        //create a new plant object
+                        AddPlant(((MajesticPlant)actors[newPosX, newPosY]).Pollinate(), gridSizeX, gridSizeY);
                         //fly eats some of the plant then goes back to its original position
                         Flies[x].PositionX = originalX;
                         Flies[x].PositionY = originalY;
                         actors[originalX, originalY] = Flies[x];
-                        AddPlant(((MajesticPlant)actors[newPosX, newPosY]).Pollinate(), gridSizeX, gridSizeY);
-
+                        Console.WriteLine("Majestic Plant's Size " + ((Plant)actors[newPosX, newPosY]).Size);
+                        Console.WriteLine("Majestic Plant's Life " + ((Plant)actors[newPosX, newPosY]).Life);
+                        Console.WriteLine("New Plant Created ");
                     }
+                    //if the fly collided with a Deadly Mimic, delete the fly
                     else if (actors[newPosX, newPosY].GetType() == typeof(Organisms.DeadlyMimic))
                     {
-                        Console.WriteLine("Deadly");
+                        Console.WriteLine("------------------------------- Fly Colided With a Deadly Mimic");
+                        //increase the life of deadly mimic
                         ((DeadlyMimic)actors[newPosX, newPosY]).Eat();
                         flyCount--;
                         Flies[x] = null;
-                        //current 2D Actor cell will have a Mimic in it
+                        Console.WriteLine("Deadly Mimic's Size " + ((Plant)actors[newPosX, newPosY]).Size);
+                        Console.WriteLine("Deadly Mimic's Life " + ((Plant)actors[newPosX, newPosY]).Life);
                     }
                     else if (actors[newPosX, newPosY].GetType() == typeof(Organisms.Fly))
                     {
-                        Console.WriteLine("Fly");
+                        Console.WriteLine("------------------------------- This Fly Colided With Another Fly");
                         //fly says hello then goes back to its original position
                         Flies[x].PositionX = originalX;
                         Flies[x].PositionY = originalY;
                         actors[originalX, originalY] = Flies[x];
+                        Console.WriteLine("Another Fly's Life " + ((Fly)actors[newPosX, newPosY]).Life);
                     }
-                }
+                }//outerIf
                 else
                 {
-                    Console.WriteLine("Else");
+                    Console.WriteLine("------------------------------- No collision");
                     actors[newPosX, newPosY] = Flies[x];
+                    Console.WriteLine("This Fly's Life " + ((Fly)actors[newPosX, newPosY]).Life);
                 }
             }//for
             //remove all the null items from the fly list

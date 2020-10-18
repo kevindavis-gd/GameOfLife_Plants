@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.LoadDataButton = new System.Windows.Forms.Button();
             this.textBox_FlyNum = new System.Windows.Forms.TextBox();
             this.textBox_MajesticNum = new System.Windows.Forms.TextBox();
@@ -40,40 +41,51 @@
             this.label_Cols = new System.Windows.Forms.Label();
             this.label_Rows = new System.Windows.Forms.Label();
             this.button_Next = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label_FlyCount = new System.Windows.Forms.Label();
-            this.label_MajesticCount = new System.Windows.Forms.Label();
+            this.groupBox_Control = new System.Windows.Forms.GroupBox();
+            this.radioButton_Manual = new System.Windows.Forms.RadioButton();
+            this.radioButton_Auto = new System.Windows.Forms.RadioButton();
+            this.label_genCount = new System.Windows.Forms.Label();
+            this.label_generationNum = new System.Windows.Forms.Label();
+            this.textBox_generationNum = new System.Windows.Forms.TextBox();
+            this.button_Restart = new System.Windows.Forms.Button();
             this.label_DeadlyCount = new System.Windows.Forms.Label();
-            this.groupBox1.SuspendLayout();
+            this.label_MajesticCount = new System.Windows.Forms.Label();
+            this.label_FlyCount = new System.Windows.Forms.Label();
+            this.timer_Game = new System.Windows.Forms.Timer(this.components);
+            this.groupBox_Control.SuspendLayout();
             this.SuspendLayout();
             // 
             // LoadDataButton
             // 
-            this.LoadDataButton.Location = new System.Drawing.Point(257, 51);
+            this.LoadDataButton.Location = new System.Drawing.Point(328, 39);
+            this.LoadDataButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.LoadDataButton.Name = "LoadDataButton";
             this.LoadDataButton.Size = new System.Drawing.Size(75, 23);
             this.LoadDataButton.TabIndex = 0;
-            this.LoadDataButton.Text = "Load";
+            this.LoadDataButton.Text = "Start";
             this.LoadDataButton.UseVisualStyleBackColor = true;
             this.LoadDataButton.Click += new System.EventHandler(this.LoadButton_click);
             // 
             // textBox_FlyNum
             // 
-            this.textBox_FlyNum.Location = new System.Drawing.Point(83, 4);
+            this.textBox_FlyNum.Location = new System.Drawing.Point(77, 14);
+            this.textBox_FlyNum.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox_FlyNum.Name = "textBox_FlyNum";
             this.textBox_FlyNum.Size = new System.Drawing.Size(28, 22);
             this.textBox_FlyNum.TabIndex = 53;
             // 
             // textBox_MajesticNum
             // 
-            this.textBox_MajesticNum.Location = new System.Drawing.Point(83, 32);
+            this.textBox_MajesticNum.Location = new System.Drawing.Point(77, 43);
+            this.textBox_MajesticNum.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox_MajesticNum.Name = "textBox_MajesticNum";
             this.textBox_MajesticNum.Size = new System.Drawing.Size(28, 22);
             this.textBox_MajesticNum.TabIndex = 54;
             // 
             // textBox_DeadlyNum
             // 
-            this.textBox_DeadlyNum.Location = new System.Drawing.Point(83, 60);
+            this.textBox_DeadlyNum.Location = new System.Drawing.Point(77, 74);
+            this.textBox_DeadlyNum.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox_DeadlyNum.Name = "textBox_DeadlyNum";
             this.textBox_DeadlyNum.Size = new System.Drawing.Size(28, 22);
             this.textBox_DeadlyNum.TabIndex = 55;
@@ -81,7 +93,7 @@
             // label_FlyNum
             // 
             this.label_FlyNum.AutoSize = true;
-            this.label_FlyNum.Location = new System.Drawing.Point(39, 4);
+            this.label_FlyNum.Location = new System.Drawing.Point(32, 18);
             this.label_FlyNum.Name = "label_FlyNum";
             this.label_FlyNum.Size = new System.Drawing.Size(38, 17);
             this.label_FlyNum.TabIndex = 56;
@@ -91,7 +103,7 @@
             // label_MajesticNum
             // 
             this.label_MajesticNum.AutoSize = true;
-            this.label_MajesticNum.Location = new System.Drawing.Point(6, 29);
+            this.label_MajesticNum.Location = new System.Drawing.Point(-1, 48);
             this.label_MajesticNum.Name = "label_MajesticNum";
             this.label_MajesticNum.Size = new System.Drawing.Size(71, 17);
             this.label_MajesticNum.TabIndex = 57;
@@ -100,7 +112,7 @@
             // label_DeadlyNums
             // 
             this.label_DeadlyNums.AutoSize = true;
-            this.label_DeadlyNums.Location = new System.Drawing.Point(13, 57);
+            this.label_DeadlyNums.Location = new System.Drawing.Point(5, 78);
             this.label_DeadlyNums.Name = "label_DeadlyNums";
             this.label_DeadlyNums.Size = new System.Drawing.Size(64, 17);
             this.label_DeadlyNums.TabIndex = 58;
@@ -108,14 +120,16 @@
             // 
             // textBox_Rows
             // 
-            this.textBox_Rows.Location = new System.Drawing.Point(174, 7);
+            this.textBox_Rows.Location = new System.Drawing.Point(220, 15);
+            this.textBox_Rows.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox_Rows.Name = "textBox_Rows";
             this.textBox_Rows.Size = new System.Drawing.Size(31, 22);
             this.textBox_Rows.TabIndex = 59;
             // 
             // textBox_Columns
             // 
-            this.textBox_Columns.Location = new System.Drawing.Point(174, 35);
+            this.textBox_Columns.Location = new System.Drawing.Point(220, 46);
+            this.textBox_Columns.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox_Columns.Name = "textBox_Columns";
             this.textBox_Columns.Size = new System.Drawing.Size(31, 22);
             this.textBox_Columns.TabIndex = 60;
@@ -123,26 +137,27 @@
             // label_Cols
             // 
             this.label_Cols.AutoSize = true;
-            this.label_Cols.Location = new System.Drawing.Point(133, 7);
+            this.label_Cols.Location = new System.Drawing.Point(167, 18);
             this.label_Cols.Name = "label_Cols";
-            this.label_Cols.Size = new System.Drawing.Size(35, 17);
+            this.label_Cols.Size = new System.Drawing.Size(47, 17);
             this.label_Cols.TabIndex = 61;
-            this.label_Cols.Text = "Cols";
+            this.label_Cols.Text = "Row #";
             this.label_Cols.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // label_Rows
             // 
             this.label_Rows.AutoSize = true;
-            this.label_Rows.Location = new System.Drawing.Point(126, 37);
+            this.label_Rows.Location = new System.Drawing.Point(167, 48);
             this.label_Rows.Name = "label_Rows";
-            this.label_Rows.Size = new System.Drawing.Size(42, 17);
+            this.label_Rows.Size = new System.Drawing.Size(40, 17);
             this.label_Rows.TabIndex = 62;
-            this.label_Rows.Text = "Rows";
+            this.label_Rows.Text = "Col #";
             this.label_Rows.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // button_Next
             // 
-            this.button_Next.Location = new System.Drawing.Point(257, 7);
+            this.button_Next.Location = new System.Drawing.Point(328, 12);
+            this.button_Next.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button_Next.Name = "button_Next";
             this.button_Next.Size = new System.Drawing.Size(75, 23);
             this.button_Next.TabIndex = 63;
@@ -150,55 +165,134 @@
             this.button_Next.UseVisualStyleBackColor = true;
             this.button_Next.Click += new System.EventHandler(this.button_Next_Click);
             // 
-            // groupBox1
+            // groupBox_Control
             // 
-            this.groupBox1.Controls.Add(this.label_DeadlyCount);
-            this.groupBox1.Controls.Add(this.label_MajesticCount);
-            this.groupBox1.Controls.Add(this.label_FlyCount);
-            this.groupBox1.Controls.Add(this.label_DeadlyNums);
-            this.groupBox1.Controls.Add(this.LoadDataButton);
-            this.groupBox1.Controls.Add(this.button_Next);
-            this.groupBox1.Controls.Add(this.label_MajesticNum);
-            this.groupBox1.Controls.Add(this.textBox_Columns);
-            this.groupBox1.Controls.Add(this.label_Rows);
-            this.groupBox1.Controls.Add(this.label_FlyNum);
-            this.groupBox1.Controls.Add(this.label_Cols);
-            this.groupBox1.Controls.Add(this.textBox_Rows);
-            this.groupBox1.Controls.Add(this.textBox_DeadlyNum);
-            this.groupBox1.Controls.Add(this.textBox_MajesticNum);
-            this.groupBox1.Controls.Add(this.textBox_FlyNum);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(642, 102);
-            this.groupBox1.TabIndex = 64;
-            this.groupBox1.TabStop = false;
+            this.groupBox_Control.AutoSize = true;
+            this.groupBox_Control.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox_Control.Controls.Add(this.radioButton_Manual);
+            this.groupBox_Control.Controls.Add(this.radioButton_Auto);
+            this.groupBox_Control.Controls.Add(this.label_genCount);
+            this.groupBox_Control.Controls.Add(this.label_generationNum);
+            this.groupBox_Control.Controls.Add(this.textBox_generationNum);
+            this.groupBox_Control.Controls.Add(this.button_Restart);
+            this.groupBox_Control.Controls.Add(this.label_DeadlyCount);
+            this.groupBox_Control.Controls.Add(this.label_MajesticCount);
+            this.groupBox_Control.Controls.Add(this.label_FlyCount);
+            this.groupBox_Control.Controls.Add(this.label_DeadlyNums);
+            this.groupBox_Control.Controls.Add(this.LoadDataButton);
+            this.groupBox_Control.Controls.Add(this.button_Next);
+            this.groupBox_Control.Controls.Add(this.label_MajesticNum);
+            this.groupBox_Control.Controls.Add(this.textBox_Columns);
+            this.groupBox_Control.Controls.Add(this.label_Rows);
+            this.groupBox_Control.Controls.Add(this.label_FlyNum);
+            this.groupBox_Control.Controls.Add(this.label_Cols);
+            this.groupBox_Control.Controls.Add(this.textBox_Rows);
+            this.groupBox_Control.Controls.Add(this.textBox_DeadlyNum);
+            this.groupBox_Control.Controls.Add(this.textBox_MajesticNum);
+            this.groupBox_Control.Controls.Add(this.textBox_FlyNum);
+            this.groupBox_Control.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox_Control.Location = new System.Drawing.Point(0, 0);
+            this.groupBox_Control.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox_Control.Name = "groupBox_Control";
+            this.groupBox_Control.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox_Control.Size = new System.Drawing.Size(958, 115);
+            this.groupBox_Control.TabIndex = 64;
+            this.groupBox_Control.TabStop = false;
             // 
-            // label_FlyCount
+            // radioButton_Manual
             // 
-            this.label_FlyCount.AutoSize = true;
-            this.label_FlyCount.Location = new System.Drawing.Point(443, 18);
-            this.label_FlyCount.Name = "label_FlyCount";
-            this.label_FlyCount.Size = new System.Drawing.Size(46, 17);
-            this.label_FlyCount.TabIndex = 64;
-            this.label_FlyCount.Text = "label1";
+            this.radioButton_Manual.AutoSize = true;
+            this.radioButton_Manual.Checked = true;
+            this.radioButton_Manual.Location = new System.Drawing.Point(443, 39);
+            this.radioButton_Manual.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radioButton_Manual.Name = "radioButton_Manual";
+            this.radioButton_Manual.Size = new System.Drawing.Size(141, 21);
+            this.radioButton_Manual.TabIndex = 72;
+            this.radioButton_Manual.TabStop = true;
+            this.radioButton_Manual.Text = "Manual Increment";
+            this.radioButton_Manual.UseVisualStyleBackColor = true;
+            this.radioButton_Manual.CheckedChanged += new System.EventHandler(this.radioButton_Manual_CheckedChanged);
             // 
-            // label_MajesticCount
+            // radioButton_Auto
             // 
-            this.label_MajesticCount.AutoSize = true;
-            this.label_MajesticCount.Location = new System.Drawing.Point(443, 40);
-            this.label_MajesticCount.Name = "label_MajesticCount";
-            this.label_MajesticCount.Size = new System.Drawing.Size(46, 17);
-            this.label_MajesticCount.TabIndex = 65;
-            this.label_MajesticCount.Text = "label2";
+            this.radioButton_Auto.AutoSize = true;
+            this.radioButton_Auto.Location = new System.Drawing.Point(443, 14);
+            this.radioButton_Auto.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.radioButton_Auto.Name = "radioButton_Auto";
+            this.radioButton_Auto.Size = new System.Drawing.Size(124, 21);
+            this.radioButton_Auto.TabIndex = 71;
+            this.radioButton_Auto.Text = "Auto Increment";
+            this.radioButton_Auto.UseVisualStyleBackColor = true;
+            this.radioButton_Auto.CheckedChanged += new System.EventHandler(this.radioButton_Auto_CheckedChanged);
+            // 
+            // label_genCount
+            // 
+            this.label_genCount.AutoSize = true;
+            this.label_genCount.Location = new System.Drawing.Point(657, 71);
+            this.label_genCount.Name = "label_genCount";
+            this.label_genCount.Size = new System.Drawing.Size(13, 17);
+            this.label_genCount.TabIndex = 70;
+            this.label_genCount.Text = "-";
+            // 
+            // label_generationNum
+            // 
+            this.label_generationNum.AutoSize = true;
+            this.label_generationNum.Location = new System.Drawing.Point(123, 78);
+            this.label_generationNum.Name = "label_generationNum";
+            this.label_generationNum.Size = new System.Drawing.Size(91, 17);
+            this.label_generationNum.TabIndex = 69;
+            this.label_generationNum.Text = "Generation #";
+            // 
+            // textBox_generationNum
+            // 
+            this.textBox_generationNum.Location = new System.Drawing.Point(220, 71);
+            this.textBox_generationNum.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.textBox_generationNum.Name = "textBox_generationNum";
+            this.textBox_generationNum.Size = new System.Drawing.Size(31, 22);
+            this.textBox_generationNum.TabIndex = 68;
+            // 
+            // button_Restart
+            // 
+            this.button_Restart.Location = new System.Drawing.Point(328, 69);
+            this.button_Restart.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button_Restart.Name = "button_Restart";
+            this.button_Restart.Size = new System.Drawing.Size(75, 23);
+            this.button_Restart.TabIndex = 67;
+            this.button_Restart.Text = "Restart";
+            this.button_Restart.UseVisualStyleBackColor = true;
+            this.button_Restart.Click += new System.EventHandler(this.button_Restart_Click);
             // 
             // label_DeadlyCount
             // 
             this.label_DeadlyCount.AutoSize = true;
-            this.label_DeadlyCount.Location = new System.Drawing.Point(443, 65);
+            this.label_DeadlyCount.Location = new System.Drawing.Point(657, 50);
             this.label_DeadlyCount.Name = "label_DeadlyCount";
-            this.label_DeadlyCount.Size = new System.Drawing.Size(46, 17);
+            this.label_DeadlyCount.Size = new System.Drawing.Size(13, 17);
             this.label_DeadlyCount.TabIndex = 66;
-            this.label_DeadlyCount.Text = "label3";
+            this.label_DeadlyCount.Text = "-";
+            // 
+            // label_MajesticCount
+            // 
+            this.label_MajesticCount.AutoSize = true;
+            this.label_MajesticCount.Location = new System.Drawing.Point(657, 30);
+            this.label_MajesticCount.Name = "label_MajesticCount";
+            this.label_MajesticCount.Size = new System.Drawing.Size(13, 17);
+            this.label_MajesticCount.TabIndex = 65;
+            this.label_MajesticCount.Text = "-";
+            // 
+            // label_FlyCount
+            // 
+            this.label_FlyCount.AutoSize = true;
+            this.label_FlyCount.Location = new System.Drawing.Point(657, 12);
+            this.label_FlyCount.Name = "label_FlyCount";
+            this.label_FlyCount.Size = new System.Drawing.Size(13, 17);
+            this.label_FlyCount.TabIndex = 64;
+            this.label_FlyCount.Text = "-";
+            // 
+            // timer_Game
+            // 
+            this.timer_Game.Interval = 20;
+            this.timer_Game.Tick += new System.EventHandler(this.timer_Game_Tick);
             // 
             // MainForm
             // 
@@ -206,14 +300,18 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.AutoScrollMargin = new System.Drawing.Size(1000, 1000);
-            this.ClientSize = new System.Drawing.Size(911, 554);
-            this.Controls.Add(this.groupBox1);
+            this.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.ClientSize = new System.Drawing.Size(979, 875);
+            this.Controls.Add(this.groupBox_Control);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.MinimumSize = new System.Drawing.Size(974, 894);
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "Plants";
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupBox_Control.ResumeLayout(false);
+            this.groupBox_Control.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -231,10 +329,17 @@
         private System.Windows.Forms.Label label_Cols;
         private System.Windows.Forms.Label label_Rows;
         private System.Windows.Forms.Button button_Next;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBox_Control;
         private System.Windows.Forms.Label label_DeadlyCount;
         private System.Windows.Forms.Label label_MajesticCount;
         private System.Windows.Forms.Label label_FlyCount;
+        private System.Windows.Forms.Button button_Restart;
+        private System.Windows.Forms.Label label_generationNum;
+        private System.Windows.Forms.TextBox textBox_generationNum;
+        private System.Windows.Forms.Timer timer_Game;
+        private System.Windows.Forms.Label label_genCount;
+        private System.Windows.Forms.RadioButton radioButton_Manual;
+        private System.Windows.Forms.RadioButton radioButton_Auto;
     }
 }
 

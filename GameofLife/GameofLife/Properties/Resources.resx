@@ -118,22 +118,28 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Deadly Mimic" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Deadly Mimic.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="MajesticPlant3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MajesticPlant3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Plant" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Plant.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="BackGround" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\BackGround.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Fly" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Fly.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Deadly Mimic1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Deadly Mimic.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="MajesticPlant1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MajesticPlant1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Fly1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Fly.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <value>..\Resources\Fly1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Plant1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Plant.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="DeadlyMimic1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DeadlyMimic1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DeadlyMimic2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DeadlyMimic2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DeadlyMimic3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\DeadlyMimic3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MajesticPlant2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\MajesticPlant2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

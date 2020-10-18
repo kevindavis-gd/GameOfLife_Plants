@@ -17,6 +17,7 @@ namespace Organisms
         public override int Life
         {
             get { return life; }
+            set { life = value; }
         }
         public override int PositionX
         {

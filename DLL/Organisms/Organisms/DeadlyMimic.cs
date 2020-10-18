@@ -7,7 +7,7 @@ namespace Organisms
 
     public class DeadlyMimic : Plant
     {
-        int life, size, positionX, positionY;
+        int life, size, positionX, positionY, growth;
         static int count = 0;
         /// ******************************************** Properties *********************************
         public override int Count
@@ -17,6 +17,7 @@ namespace Organisms
         public override int Life
         {
             get { return life; }
+            set { life = value; }
         }
         public override int Size
         {
@@ -47,11 +48,16 @@ namespace Organisms
             //if it gets food it can live for 5 generations
             //not compounded, it just resets, it is not added
             life = 5;
+            growth++;
         }//Eat
 
         public override void Grow()
         {
-            size++;
+            if (growth > 0)
+            {
+                growth--;
+                size++;
+            }
         }
 
         ~DeadlyMimic()

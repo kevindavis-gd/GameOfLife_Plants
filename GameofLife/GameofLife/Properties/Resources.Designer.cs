@@ -63,9 +63,9 @@ namespace GameofLife.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Deadly_Mimic {
+        internal static System.Drawing.Bitmap BackGround {
             get {
-                object obj = ResourceManager.GetObject("Deadly Mimic", resourceCulture);
+                object obj = ResourceManager.GetObject("BackGround", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -73,9 +73,9 @@ namespace GameofLife.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Deadly_Mimic1 {
+        internal static System.Drawing.Bitmap DeadlyMimic1 {
             get {
-                object obj = ResourceManager.GetObject("Deadly Mimic1", resourceCulture);
+                object obj = ResourceManager.GetObject("DeadlyMimic1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,9 +83,19 @@ namespace GameofLife.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Fly {
+        internal static System.Drawing.Bitmap DeadlyMimic2 {
             get {
-                object obj = ResourceManager.GetObject("Fly", resourceCulture);
+                object obj = ResourceManager.GetObject("DeadlyMimic2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap DeadlyMimic3 {
+            get {
+                object obj = ResourceManager.GetObject("DeadlyMimic3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -103,9 +113,9 @@ namespace GameofLife.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Plant {
+        internal static System.Drawing.Bitmap MajesticPlant1 {
             get {
-                object obj = ResourceManager.GetObject("Plant", resourceCulture);
+                object obj = ResourceManager.GetObject("MajesticPlant1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -113,9 +123,19 @@ namespace GameofLife.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Plant1 {
+        internal static System.Drawing.Bitmap MajesticPlant2 {
             get {
-                object obj = ResourceManager.GetObject("Plant1", resourceCulture);
+                object obj = ResourceManager.GetObject("MajesticPlant2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap MajesticPlant3 {
+            get {
+                object obj = ResourceManager.GetObject("MajesticPlant3", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

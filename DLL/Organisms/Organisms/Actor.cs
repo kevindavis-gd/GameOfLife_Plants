@@ -5,17 +5,15 @@ using System.Drawing;
 
 namespace Organisms
 {
-
-    public abstract class Actor
+    public abstract class Actor:IActors
     {
         /// ******************************************** Properties *********************************
-        public abstract int Life { get; }
+        public abstract int Life { get; set; }
         public abstract int PositionX { get; set; }
         public abstract int PositionY { get; set; }
         public abstract int Count //abstract property
         {
             get;
         }
-        /// ******************************************** Methods ************************************
     }//Actor
 }
