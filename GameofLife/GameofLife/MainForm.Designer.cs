@@ -195,7 +195,7 @@
             this.groupBox_Control.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox_Control.Name = "groupBox_Control";
             this.groupBox_Control.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox_Control.Size = new System.Drawing.Size(958, 115);
+            this.groupBox_Control.Size = new System.Drawing.Size(979, 115);
             this.groupBox_Control.TabIndex = 64;
             this.groupBox_Control.TabStop = false;
             // 
@@ -301,7 +301,7 @@
             this.AutoScroll = true;
             this.AutoScrollMargin = new System.Drawing.Size(1000, 1000);
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(979, 875);
+            this.ClientSize = new System.Drawing.Size(1000, 875);
             this.Controls.Add(this.groupBox_Control);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MinimumSize = new System.Drawing.Size(974, 894);

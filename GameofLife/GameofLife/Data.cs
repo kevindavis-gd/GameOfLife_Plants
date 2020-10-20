@@ -1,12 +1,5 @@
 ﻿using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
-using System.Data;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.SqlServer.Server;
 using Organisms;
 
 namespace GameofLife
@@ -33,7 +26,7 @@ namespace GameofLife
             get { return majesticCount; }
             set { majesticCount = value; }
         }
-        
+
         public Actor[,] Actors
         {
             get { return actors; }
@@ -73,9 +66,9 @@ namespace GameofLife
         ///************************************************* Add Plant *******************************************
         public void AddPlant(MajesticPlant child, int gridSizeX, int gridSizeY)
         {
-                //randomly insert child onto grid
-                RandomInsert(child, gridSizeX, gridSizeY);
-            
+            //randomly insert child onto grid
+            RandomInsert(child, gridSizeX, gridSizeY);
+
         }//AddPlant
         ///************************************************* Random Insert *******************************************
         public void RandomInsert(Actor temp, int gridSizeX, int gridSizeY)
@@ -95,7 +88,6 @@ namespace GameofLife
             else
             {
                 temp = null;
-                Console.WriteLine("_-_-_-_-_-_-_-_-_-_-_-_-_-Grid is Full, New plant is going to be killed");
             }
         }//RandomInsert
         ///************************************************* Move Flies *******************************************
@@ -125,7 +117,6 @@ namespace GameofLife
                     //if the fly collided with a majestic fly, keep original position
                     if (actors[newPosX, newPosY].GetType() == typeof(Organisms.MajesticPlant))
                     {
-                        Console.WriteLine("------------------------------- Fly Colided With a Majestic Plant");
                         ((Fly)Flies[x]).Eat();
                         //create a new plant object
                         AddPlant(((MajesticPlant)actors[newPosX, newPosY]).Pollinate(), gridSizeX, gridSizeY);
@@ -133,41 +124,32 @@ namespace GameofLife
                         Flies[x].PositionX = originalX;
                         Flies[x].PositionY = originalY;
                         actors[originalX, originalY] = Flies[x];
-                        Console.WriteLine("Majestic Plant's Size " + ((Plant)actors[newPosX, newPosY]).Size);
-                        Console.WriteLine("Majestic Plant's Life " + ((Plant)actors[newPosX, newPosY]).Life);
-                        Console.WriteLine("New Plant Created ");
                     }
                     //if the fly collided with a Deadly Mimic, delete the fly
                     else if (actors[newPosX, newPosY].GetType() == typeof(Organisms.DeadlyMimic))
                     {
-                        Console.WriteLine("------------------------------- Fly Colided With a Deadly Mimic");
                         //increase the life of deadly mimic
                         ((DeadlyMimic)actors[newPosX, newPosY]).Eat();
-                        flyCount--;
+                        //flyCount--;
                         Flies[x] = null;
-                        Console.WriteLine("Deadly Mimic's Size " + ((Plant)actors[newPosX, newPosY]).Size);
-                        Console.WriteLine("Deadly Mimic's Life " + ((Plant)actors[newPosX, newPosY]).Life);
                     }
                     else if (actors[newPosX, newPosY].GetType() == typeof(Organisms.Fly))
                     {
-                        Console.WriteLine("------------------------------- This Fly Colided With Another Fly");
                         //fly says hello then goes back to its original position
                         Flies[x].PositionX = originalX;
                         Flies[x].PositionY = originalY;
                         actors[originalX, originalY] = Flies[x];
-                        Console.WriteLine("Another Fly's Life " + ((Fly)actors[newPosX, newPosY]).Life);
                     }
                 }//outerIf
                 else
                 {
-                    Console.WriteLine("------------------------------- No collision");
                     actors[newPosX, newPosY] = Flies[x];
-                    Console.WriteLine("This Fly's Life " + ((Fly)actors[newPosX, newPosY]).Life);
                 }
             }//for
             //remove all the null items from the fly list
             Flies.RemoveAll(item => item == null);
-            //System.GC.Collect();
+            System.GC.Collect();
         }//Move
+
     }//Class Data
 }

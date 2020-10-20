@@ -77,7 +77,7 @@ namespace Organisms
         }//Eat
         ~Fly()
         {
-            count--;
+            --count;
         }//destructor
     }//Flies
 }

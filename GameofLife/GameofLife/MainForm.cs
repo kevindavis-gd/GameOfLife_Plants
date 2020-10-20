@@ -1,15 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Organisms;
 
 namespace GameofLife
 {
@@ -95,7 +86,7 @@ namespace GameofLife
             label_DeadlyCount.Text = "Deadly Mimics Left: " + DataStructure.DeadlyCount;
             label_FlyCount.Text = "Flys Left: " + DataStructure.FlyCount;
             label_MajesticCount.Text = "Majestic Plant Left: " + DataStructure.MajesticCount;
-            label_genCount.Text = "Generation: " + Gen;
+            label_genCount.Text = "Generation " + Gen + " of " + generations;
             if (!autoRun)
             {
                 timer_Game.Stop();
@@ -108,6 +99,7 @@ namespace GameofLife
             if (Gen >= generations)
             {
                 timer_Game.Stop();
+
                 MessageBox.Show("Max Generation Reached", "Max Gen");
                 Application.Restart();
             } 
@@ -166,68 +158,82 @@ namespace GameofLife
                 {
                     if (DataStructure.Actors[x, y] != null)
                     {
+                        //decrement life
                         DataStructure.Actors[x, y].Life--;
-
+                        int switchCase = 9;
+                        //switches can only use variables
                         if (DataStructure.Actors[x, y].GetType() == typeof(Organisms.DeadlyMimic))
-                        {
-                            if (DataStructure.Actors[x, y].Life < 0)
-                            {
-                                DataStructure.Actors[x, y] = null;
-                                continue;
-                            }
-
-                            ((Organisms.DeadlyMimic)DataStructure.Actors[x, y]).Grow();
-
-                            if (((Organisms.DeadlyMimic)DataStructure.Actors[x, y]).Size < 1)
-                            {
-                                grid[x, y].Image = GameofLife.Properties.Resources.DeadlyMimic1;
-                            }
-                            else if (((Organisms.DeadlyMimic)DataStructure.Actors[x, y]).Size < 2)
-                            {
-                                grid[x, y].Image = GameofLife.Properties.Resources.DeadlyMimic2;
-                            }
-                            else
-                            {
-                                grid[x, y].Image = GameofLife.Properties.Resources.DeadlyMimic3;
-                            }
-                            DataStructure.DeadlyCount++;
-                        }
+                            switchCase = 0;
                         if (DataStructure.Actors[x, y].GetType() == typeof(Organisms.MajesticPlant))
-                        {
-                            //plants dont die
-                            ((Organisms.MajesticPlant)DataStructure.Actors[x, y]).Grow();
-                            if (((Organisms.MajesticPlant)DataStructure.Actors[x, y]).Size < 1)
-                            {
-                                grid[x, y].Image = GameofLife.Properties.Resources.MajesticPlant1;
-                            }
-                            else if (((Organisms.MajesticPlant)DataStructure.Actors[x, y]).Size < 2)
-                            {
-                                grid[x, y].Image = GameofLife.Properties.Resources.MajesticPlant2;
-                            }
-                            else
-                            {
-                                grid[x, y].Image = GameofLife.Properties.Resources.MajesticPlant3;
-                            }
-                            
-                            DataStructure.MajesticCount++;
-                        }
+                            switchCase = 1;
                         if (DataStructure.Actors[x, y].GetType() == typeof(Organisms.Fly))
+                            switchCase = 2;
+
+                        //switch statement
+                        switch (switchCase)
                         {
-                            if (DataStructure.Actors[x, y].Life < 0)
-                            {
-                                DataStructure.Actors[x, y] = null;
-                                DataStructure.Actors[x, y] = null;
-                                continue;
-                            }
-                            grid[x, y].Image = GameofLife.Properties.Resources.Fly1;
-                            DataStructure.FlyCount++;
-                            DataStructure.Flies.Add(DataStructure.Actors[x, y]);
+                            case 0:
+                                if (DataStructure.Actors[x, y].Life < 0)
+                                {
+                                    DataStructure.Actors[x, y] = null;
+                                    continue;
+                                }
+
+                                ((Organisms.DeadlyMimic)DataStructure.Actors[x, y]).Grow();
+
+                                if (((Organisms.DeadlyMimic)DataStructure.Actors[x, y]).Size < 1)
+                                {
+                                    grid[x, y].Image = GameofLife.Properties.Resources.DeadlyMimic1;
+                                }
+                                else if (((Organisms.DeadlyMimic)DataStructure.Actors[x, y]).Size < 2)
+                                {
+                                    grid[x, y].Image = GameofLife.Properties.Resources.DeadlyMimic2;
+                                }
+                                else
+                                {
+                                    grid[x, y].Image = GameofLife.Properties.Resources.DeadlyMimic3;
+                                }
+                                //DataStructure.DeadlyCount++;
+                                //Using static Variables
+                                DataStructure.DeadlyCount = DataStructure.Actors[x, y].Count;
+                                break;
+                            case 1:
+                                //plants dont die
+                                ((Organisms.MajesticPlant)DataStructure.Actors[x, y]).Grow();
+                                if (((Organisms.MajesticPlant)DataStructure.Actors[x, y]).Size < 1)
+                                {
+                                    grid[x, y].Image = GameofLife.Properties.Resources.MajesticPlant1;
+                                }
+                                else if (((Organisms.MajesticPlant)DataStructure.Actors[x, y]).Size < 2)
+                                {
+                                    grid[x, y].Image = GameofLife.Properties.Resources.MajesticPlant2;
+                                }
+                                else
+                                {
+                                    grid[x, y].Image = GameofLife.Properties.Resources.MajesticPlant3;
+                                }
+                                //DataStructure.MajesticCount++;
+                                DataStructure.MajesticCount = DataStructure.Actors[x, y].Count;
+                                break;
+                            case 2:
+                                if (DataStructure.Actors[x, y].Life < 0)
+                                {
+                                    DataStructure.Actors[x, y] = null;
+                                    DataStructure.Actors[x, y] = null;   
+                                    continue;
+                                }
+                                grid[x, y].Image = GameofLife.Properties.Resources.Fly1;
+                                //DataStructure.FlyCount++;
+                                DataStructure.FlyCount = DataStructure.Actors[x, y].Count;
+                                DataStructure.Flies.Add(DataStructure.Actors[x, y]);
+                                break;
+                            default:
+
+                                break;
                         }
                     }//if
                 }//innerFor
             }//outerFor
-            Console.WriteLine("*****************************");
-            Console.WriteLine("*****************************");
         }//LoadPictures
         //*******************************************************Default Values****************************************
         public void DefaultValues()

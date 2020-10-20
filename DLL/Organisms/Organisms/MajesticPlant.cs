@@ -60,7 +60,7 @@ namespace Organisms
         }
         ~MajesticPlant()
         {
-            count--;
+            --count;
         }//destructor
     }//MajesticPlant
 }

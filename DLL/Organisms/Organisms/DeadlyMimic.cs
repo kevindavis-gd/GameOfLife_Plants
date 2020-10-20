@@ -48,7 +48,7 @@ namespace Organisms
             //if it gets food it can live for 5 generations
             //not compounded, it just resets, it is not added
             life = 5;
-            growth++;
+            growth += 2;
         }//Eat
 
         public override void Grow()
@@ -62,7 +62,7 @@ namespace Organisms
 
         ~DeadlyMimic()
         {
-            count--;
+            --count;
         }//destructor
     }//DeadlyMimic 
 }
