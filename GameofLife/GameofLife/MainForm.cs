@@ -8,9 +8,10 @@ namespace GameofLife
     {
         int flyNum, deadlyNum, majesticNum, gridSizeX, gridSizeY, generations = 0;
         PictureBox[,] grid;
-        Data DataStructure;
+        DataStructure DataStructure = new DataStructure();
+        GameLogic Logic = new GameLogic();
         int Gen = 0;
-        bool autoRun;
+        
 
         public MainForm() { InitializeComponent(); }
         private void MainForm_Load(object sender, EventArgs e)
@@ -20,11 +21,13 @@ namespace GameofLife
         }
         private void radioButton_Auto_CheckedChanged(object sender, EventArgs e)
         {
-            autoRun = true;
+            // let game run automatically
+            Logic.AutoRun = true;
         }
         private void radioButton_Manual_CheckedChanged(object sender, EventArgs e)
         {
-            autoRun = false;
+            // requires button click to iterate
+            Logic.AutoRun = false;
         }
         private void button_Restart_Click(object sender, EventArgs e)
         {
@@ -32,11 +35,16 @@ namespace GameofLife
         }
         private void LoadButton_click(object sender, EventArgs e)
         {
+            
             LoadDataButton.Visible = false;
             button_Restart.Visible = true;
+            //load the data structure into the game logic
+            Logic.LoadGameLogic(DataStructure);
             //exception handling
             try
             {
+                
+
                 button_Next.Visible = true;
                 deadlyNum = int.Parse(textBox_DeadlyNum.Text);
                 majesticNum = int.Parse(textBox_MajesticNum.Text);
@@ -44,11 +52,13 @@ namespace GameofLife
                 gridSizeX = int.Parse(textBox_Rows.Text);
                 gridSizeY = int.Parse(textBox_Columns.Text);
                 generations = int.Parse(textBox_generationNum.Text);
+
+                if (gridSizeX > 15 || gridSizeY > 15)
+                   DefaultValues("Grid Size Exceeds Form, Replacing With Default Values");
                 //if there are too many organisms to fit on the board use default values
                 if ((deadlyNum + majesticNum + flyNum) > (gridSizeX * gridSizeY))
-                {
-                    DefaultValues();
-                }
+                    DefaultValues("Too Many Organisms, Replacing With Default Values");
+               
                 grid = new PictureBox[gridSizeX, gridSizeY];
             }//try
             catch (FormatException)
@@ -61,13 +71,14 @@ namespace GameofLife
             //change the color of empty cells
             ClearGrid(Color.Transparent);
             //create the data structure to hold the actors
-            DataStructure = new Data();
+            DataStructure = new DataStructure();
             //fill a structure with requested actors
-            DataStructure.Fill2DArray(flyNum, deadlyNum, majesticNum, gridSizeX, gridSizeY);
-            LoadPictures();
-            label_DeadlyCount.Text = "Deadly Mimics Left: " + DataStructure.DeadlyCount;
-            label_FlyCount.Text = "Flys Left: " + DataStructure.FlyCount;
-            label_MajesticCount.Text = "Majestic Plants Left: " + DataStructure.MajesticCount;
+            Logic.DataArr.Fill2DArray(flyNum, deadlyNum, majesticNum, gridSizeX, gridSizeY);
+            ScanAndUpdate();
+
+            label_DeadlyCount.Text = "Deadly Mimics Left: " + Logic.DataArr.DeadlyCount;
+            label_FlyCount.Text = "Flys Left: " + Logic.DataArr.FlyCount;
+            label_MajesticCount.Text = "Majestic Plants Left: " + Logic.DataArr.MajesticCount;
             label_genCount.Text = "Generation " + Gen + " of " + generations;
         }//LoadButton_click
 
@@ -79,15 +90,15 @@ namespace GameofLife
         private void timer_Game_Tick(object sender, EventArgs e)
         {
             ClearGrid(Color.Transparent);
-            DataStructure.MoveFlies(gridSizeX, gridSizeY);
-            LoadPictures();
+            Logic.MoveFlies(gridSizeX, gridSizeY);
+            ScanAndUpdate();
             Gen++;
             //Display organism count
-            label_DeadlyCount.Text = "Deadly Mimics Left: " + DataStructure.DeadlyCount;
-            label_FlyCount.Text = "Flys Left: " + DataStructure.FlyCount;
-            label_MajesticCount.Text = "Majestic Plant Left: " + DataStructure.MajesticCount;
+            label_DeadlyCount.Text = "Deadly Mimics Left: " + Logic.DataArr.DeadlyCount;
+            label_FlyCount.Text = "Flys Left: " + Logic.DataArr.FlyCount;
+            label_MajesticCount.Text = "Majestic Plant Left: " + Logic.DataArr.MajesticCount;
             label_genCount.Text = "Generation " + Gen + " of " + generations;
-            if (!autoRun)
+            if (!Logic.AutoRun)
             {
                 timer_Game.Stop();
                 timer_Game.Interval = 20;
@@ -130,6 +141,7 @@ namespace GameofLife
         }//LoadPictureGrid
 
         //*******************************************************Clear Grid ****************************************
+        //loop through entire picture array and set picture box image to null
         public void ClearGrid(Color color)
         {
             for (int x = 0; x < gridSizeX; x++)
@@ -143,107 +155,31 @@ namespace GameofLife
             }//outerFor
         }//SetGridColor
 
-        //*******************************************************Load Pictures ****************************************
-        public void LoadPictures()
+        //******************************************************* ScanAndUpdate ****************************************
+        //loop through the entire object array, perform movement then update the pictures
+        public void ScanAndUpdate()
         {
             //reset organism count
-            DataStructure.FlyCount = 0;
-            DataStructure.MajesticCount = 0;
-            DataStructure.DeadlyCount = 0;
-            DataStructure.Flies.Clear();
-
+            Logic.ResetOrganismCount();
             for (int x = 0; x < gridSizeX; x++)
             {
                 for (int y = 0; y < gridSizeY; y++)
                 {
-                    if (DataStructure.Actors[x, y] != null)
-                    {
-                        //decrement life
-                        DataStructure.Actors[x, y].Life--;
-                        int switchCase = 9;
-                        //switches can only use variables
-                        if (DataStructure.Actors[x, y].GetType() == typeof(Organisms.DeadlyMimic))
-                            switchCase = 0;
-                        if (DataStructure.Actors[x, y].GetType() == typeof(Organisms.MajesticPlant))
-                            switchCase = 1;
-                        if (DataStructure.Actors[x, y].GetType() == typeof(Organisms.Fly))
-                            switchCase = 2;
+                    //Logic.LoadGameLogic(Logic.DataArr);
 
-                        //switch statement
-                        switch (switchCase)
-                        {
-                            case 0:
-                                if (DataStructure.Actors[x, y].Life < 0)
-                                {
-                                    DataStructure.Actors[x, y] = null;
-                                    continue;
-                                }
-
-                                ((Organisms.DeadlyMimic)DataStructure.Actors[x, y]).Grow();
-
-                                if (((Organisms.DeadlyMimic)DataStructure.Actors[x, y]).Size < 1)
-                                {
-                                    grid[x, y].Image = GameofLife.Properties.Resources.DeadlyMimic1;
-                                }
-                                else if (((Organisms.DeadlyMimic)DataStructure.Actors[x, y]).Size < 2)
-                                {
-                                    grid[x, y].Image = GameofLife.Properties.Resources.DeadlyMimic2;
-                                }
-                                else
-                                {
-                                    grid[x, y].Image = GameofLife.Properties.Resources.DeadlyMimic3;
-                                }
-                                //DataStructure.DeadlyCount++;
-                                //Using static Variables
-                                DataStructure.DeadlyCount = DataStructure.Actors[x, y].Count;
-                                break;
-                            case 1:
-                                //plants dont die
-                                ((Organisms.MajesticPlant)DataStructure.Actors[x, y]).Grow();
-                                if (((Organisms.MajesticPlant)DataStructure.Actors[x, y]).Size < 1)
-                                {
-                                    grid[x, y].Image = GameofLife.Properties.Resources.MajesticPlant1;
-                                }
-                                else if (((Organisms.MajesticPlant)DataStructure.Actors[x, y]).Size < 2)
-                                {
-                                    grid[x, y].Image = GameofLife.Properties.Resources.MajesticPlant2;
-                                }
-                                else
-                                {
-                                    grid[x, y].Image = GameofLife.Properties.Resources.MajesticPlant3;
-                                }
-                                //DataStructure.MajesticCount++;
-                                DataStructure.MajesticCount = DataStructure.Actors[x, y].Count;
-                                break;
-                            case 2:
-                                if (DataStructure.Actors[x, y].Life < 0)
-                                {
-                                    DataStructure.Actors[x, y] = null;
-                                    DataStructure.Actors[x, y] = null;   
-                                    continue;
-                                }
-                                grid[x, y].Image = GameofLife.Properties.Resources.Fly1;
-                                //DataStructure.FlyCount++;
-                                DataStructure.FlyCount = DataStructure.Actors[x, y].Count;
-                                DataStructure.Flies.Add(DataStructure.Actors[x, y]);
-                                break;
-                            default:
-
-                                break;
-                        }
-                    }//if
+                    grid[x, y].Image = Logic.UpdateGrid(x, y, gridSizeX, gridSizeY);
                 }//innerFor
             }//outerFor
-        }//LoadPictures
+        }//ScanAndUpdate
         //*******************************************************Default Values****************************************
-        public void DefaultValues()
+        public void DefaultValues(string text)
         {
-            MessageBox.Show("Too Many Organisms, Replacing With Default Values", "Info");
-            deadlyNum = 12;
-            majesticNum = 12;
-            flyNum = 12;
+            MessageBox.Show(text, "Info");
+            deadlyNum = 20;
+            majesticNum = 20;
+            flyNum = 20;
             gridSizeX = 12;
-            gridSizeY = 14;
+            gridSizeY = 16;
             generations = 15;
         }//DefaultValues
     }//MainForm
