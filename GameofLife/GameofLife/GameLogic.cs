@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Windows.Forms;
 using Organisms;
 
 namespace GameofLife
@@ -10,7 +11,7 @@ namespace GameofLife
     {
         bool autoRun;
         DataStructure Data;
-
+        ///************************************************* Properties *******************************************
         public DataStructure DataArr
         {
             get { return Data; }
@@ -34,13 +35,15 @@ namespace GameofLife
         ///************************************************* Reset Organism Count *******************************************
         public void ResetOrganismCount()
         {
+            //reset all the counts to 0
             DataArr.FlyCount = 0;
             DataArr.MajesticCount = 0;
             DataArr.DeadlyCount = 0;
+           //delete every thing in the fly List
             DataArr.Flies.Clear();
         }
 
-
+        ///************************************************* Update Grid *******************************************
         public Image UpdateGrid(int x, int y, int gridSizeX, int gridSizeY)
         {
             Image ret = null;
@@ -48,86 +51,69 @@ namespace GameofLife
             if (DataArr.Actors[x, y] != null)
             {
                 //decrement life
-                DataArr.Actors[x, y].Life--;
-                int switchCase = 0;
-                //switches can only use variables
-                if (DataArr.Actors[x, y].GetType() == typeof(Organisms.DeadlyMimic))
-                    switchCase = 0;
-                if (DataArr.Actors[x, y].GetType() == typeof(Organisms.MajesticPlant))
-                    switchCase = 1;
-                if (DataArr.Actors[x, y].GetType() == typeof(Organisms.Fly))
-                    switchCase = 2;
-
-
-                //switch statement
-                switch (switchCase)
+                if (DataArr.Actors[x, y].Name != "MajesticPlant")
                 {
-
-                    case 0:
-                        if (DataArr.Actors[x, y].Life < 0)
-                        {
-                            DataArr.Actors[x, y] = null;
-                            return null;
-                        }
-
-                        ((Organisms.DeadlyMimic)DataArr.Actors[x, y]).Grow();
-
-                        if (((Organisms.DeadlyMimic)DataArr.Actors[x, y]).Size < 1)
-                        {
-                            ret = GameofLife.Properties.Resources.DeadlyMimic1;
-                        }
-                        else if (((Organisms.DeadlyMimic)DataArr.Actors[x, y]).Size < 2)
-                        {
-                            ret = GameofLife.Properties.Resources.DeadlyMimic2;
-                        }
-                        else
-                        {
-                            ret = GameofLife.Properties.Resources.DeadlyMimic3;
-                        }
-
-                        //Using static Variables
-                        DataArr.DeadlyCount = DataArr.Actors[x, y].Count;
-                        break;
-                    case 1:
-                        //plants dont die
-                        ((Organisms.MajesticPlant)DataArr.Actors[x, y]).Grow();
-                        if (((Organisms.MajesticPlant)DataArr.Actors[x, y]).Size < 1)
-                        {
-                            ret = GameofLife.Properties.Resources.MajesticPlant1;
-                        }
-                        else if (((Organisms.MajesticPlant)DataArr.Actors[x, y]).Size < 2)
-                        {
-                            ret = GameofLife.Properties.Resources.MajesticPlant2;
-                        }
-                        else
-                        {
-                            ret = GameofLife.Properties.Resources.MajesticPlant3;
-                        }
-                        //DataStructure.MajesticCount++;
-                        DataArr.MajesticCount = DataArr.Actors[x, y].Count;
-                        break;
-                    case 2:
-                        if (DataArr.Actors[x, y].Life < 0)
-                        {
-                            DataArr.Actors[x, y] = null;
-                            DataArr.Actors[x, y] = null;
-                            break;
-                        }
-                        ret = GameofLife.Properties.Resources.Fly1;
-                        //DataStructure.FlyCount++;
-                        DataArr.FlyCount = DataArr.Actors[x, y].Count;
-                        DataArr.Flies.Add(DataArr.Actors[x, y]);
-                        break;
-                    default:
-                        ret = null;
-                        break;
+                    DataArr.Actors[x, y].Life--;
                 }
+                if (DataArr.Actors[x, y].Life < 0)
+                {
+                    //if organism is dead remove it from the 2D object array
+                    DataArr.Actors[x, y] = null;
+                    return null;
+                }
+                //perform the grow action
+                DataArr.Actors[x, y].Grow();
+
+                if (DataArr.Actors[x, y].Name == "MajesticPlant")
+                {
+                    if (DataArr.Actors[x, y].Size < 1)
+                    {
+                        ret = GameofLife.Properties.Resources.MajesticPlant1;
+                    }
+                    else if (DataArr.Actors[x, y].Size < 2)
+                    {
+                        ret = GameofLife.Properties.Resources.MajesticPlant2;
+                    }
+                    else
+                    {
+                        ret = GameofLife.Properties.Resources.MajesticPlant3;
+                    }
+                    //static count
+                    DataArr.MajesticCount = DataArr.Actors[x, y].Count;
+                }
+                else if (DataArr.Actors[x, y].Name == "DeadlyMimic")
+                {
+                    if (DataArr.Actors[x, y].Size < 1)
+                    {
+                        ret = GameofLife.Properties.Resources.DeadlyMimic1;
+                    }
+                    else if (DataArr.Actors[x, y].Size < 2)
+                    {
+                        ret = GameofLife.Properties.Resources.DeadlyMimic2;
+                    }
+                    else
+                    {
+                        ret = GameofLife.Properties.Resources.DeadlyMimic3;
+                    }
+                    //static count
+                    DataArr.DeadlyCount = DataArr.Actors[x, y].Count;
+                }
+                else if (DataArr.Actors[x, y].Name == "Fly")
+                {
+                    ret = GameofLife.Properties.Resources.Fly1;
+                    //add each fly back into the fly List
+                    DataArr.Flies.Add(DataArr.Actors[x, y]);
+                    //static count
+                    DataArr.FlyCount = DataArr.Actors[x, y].Count;
+                } 
             }//if
             else
             {
+                //in position is null, set ret to null
                 ret = null;
+                
             }
-
+            //return what ever ret is
             return ret;
         }
 
@@ -149,7 +135,7 @@ namespace GameofLife
                 originalX = Data.Flies[x].PositionX % gridSizeX;
                 originalY = Data.Flies[x].PositionY % gridSizeY;
                 //add random number to the object's positions by calling Move()
-                ((Fly)Data.Flies[x]).Move();
+                Data.Flies[x].Move();
                 //new position mod the grid sizes so that it will wrap around
                 newPosX = Data.Flies[x].PositionX % gridSizeX;
                 newPosY = Data.Flies[x].PositionY % gridSizeY;
@@ -158,9 +144,9 @@ namespace GameofLife
                 if (Data.Actors[newPosX, newPosY] != null)
                 {
                     //if the fly collided with a majestic fly, keep original position
-                    if (Data.Actors[newPosX, newPosY].GetType() == typeof(Organisms.MajesticPlant))
+                    if (Data.Actors[newPosX, newPosY].Name == "MajesticPlant")
                     {
-                        ((Fly)Data.Flies[x]).Eat();
+                        Data.Flies[x].Eat();
                         //create a new plant object
                         Data.AddPlant(((MajesticPlant)Data.Actors[newPosX, newPosY]).Pollinate(), gridSizeX, gridSizeY);
                         //fly eats some of the plant then goes back to its original position
@@ -169,14 +155,14 @@ namespace GameofLife
                         Data.Actors[originalX, originalY] = Data.Flies[x];
                     }
                     //if the fly collided with a Deadly Mimic, delete the fly
-                    else if (Data.Actors[newPosX, newPosY].GetType() == typeof(Organisms.DeadlyMimic))
+                    else if (Data.Actors[newPosX, newPosY].Name == "DeadlyMimic")
                     {
+
                         //increase the life of deadly mimic
-                        ((DeadlyMimic)Data.Actors[newPosX, newPosY]).Eat();
-                        //flyCount--;
+                        Data.Actors[newPosX, newPosY].Eat();
                         Data.Flies[x] = null;
                     }
-                    else if (Data.Actors[newPosX, newPosY].GetType() == typeof(Organisms.Fly))
+                    else if (Data.Actors[newPosX, newPosY].Name == "Fly")
                     {
                         //fly says hello then goes back to its original position
                         Data.Flies[x].PositionX = originalX;

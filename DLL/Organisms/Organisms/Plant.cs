@@ -11,13 +11,12 @@ namespace Organisms
 
         public override int Count //abstract property
         {
-            get { return 0; }
+            get;
         }
-        public abstract int Size
+        public override int Size
         {
             get;
         }
-        /// ******************************************** Methods ************************************
-        public abstract void Grow();
+        
     }
 }

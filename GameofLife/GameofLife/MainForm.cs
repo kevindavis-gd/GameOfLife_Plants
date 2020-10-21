@@ -43,8 +43,6 @@ namespace GameofLife
             //exception handling
             try
             {
-                
-
                 button_Next.Visible = true;
                 deadlyNum = int.Parse(textBox_DeadlyNum.Text);
                 majesticNum = int.Parse(textBox_MajesticNum.Text);
@@ -101,16 +99,17 @@ namespace GameofLife
             if (!Logic.AutoRun)
             {
                 timer_Game.Stop();
+                //increase speed to make button click feel quick
                 timer_Game.Interval = 20;
             }
             else
             {
+                //reduce speed to view picture movement
                 timer_Game.Interval = 500;
             }
             if (Gen >= generations)
             {
                 timer_Game.Stop();
-
                 MessageBox.Show("Max Generation Reached", "Max Gen");
                 Application.Restart();
             } 
@@ -132,13 +131,21 @@ namespace GameofLife
                         Size = new System.Drawing.Size(50, 50),
                         BorderStyle = BorderStyle.None,
                         Anchor = AnchorStyles.Left,
+                        
 
                     };//grid
+                    grid[x, y].Click += MainForm_Click;
                     //add the picturebox object to this form
                     this.Controls.Add(grid[x, y]);
+
                 }//innerFor
             }//outerFor
         }//LoadPictureGrid
+
+        private void MainForm_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("clicked", "clicked");
+        }
 
         //*******************************************************Clear Grid ****************************************
         //loop through entire picture array and set picture box image to null
@@ -165,8 +172,6 @@ namespace GameofLife
             {
                 for (int y = 0; y < gridSizeY; y++)
                 {
-                    //Logic.LoadGameLogic(Logic.DataArr);
-
                     grid[x, y].Image = Logic.UpdateGrid(x, y, gridSizeX, gridSizeY);
                 }//innerFor
             }//outerFor

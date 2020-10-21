@@ -7,6 +7,7 @@ namespace Organisms
     public class MajesticPlant : Plant
     {
         int life, size, positionX, positionY, growth;
+        string name;
         static int count = 0;
         /// ******************************************** Properties *********************************
         public override int Count
@@ -33,6 +34,10 @@ namespace Organisms
             get { return positionY; }
             set { positionY = value; }
         }
+        public override string Name
+        {
+            get { return name; }
+        }
         /// ******************************************** Methods ************************************
         public MajesticPlant(int x, int y)
         {
@@ -42,8 +47,9 @@ namespace Organisms
             size = 0;
             PositionX = x;
             PositionY = y;
+            name = "MajesticPlant";
         }   //Constructor
-        public MajesticPlant Pollinate()
+        public override MajesticPlant Pollinate()
         {
             growth += 2;
             MajesticPlant child = new MajesticPlant(0, 0);//sprout
@@ -58,6 +64,7 @@ namespace Organisms
                 size++;
             }
         }
+  
         ~MajesticPlant()
         {
             --count;

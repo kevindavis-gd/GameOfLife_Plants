@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace Organisms
 {
-    public abstract class Actor:IActors
+    public abstract class Actor : IActors
     {
         /// ******************************************** Properties *********************************
         public abstract int Life { get; set; }
@@ -15,5 +15,20 @@ namespace Organisms
         {
             get;
         }
+        public abstract int Size
+        {
+            get;
+        }
+        public abstract string Name
+        {
+            get;
+        }
+
+        /// ******************************************** Methods *********************************
+        public abstract void Grow();
+        public abstract MajesticPlant Pollinate();
+        public virtual void Eat() { }
+        public virtual void Move() { }
+
     }//Actor
 }

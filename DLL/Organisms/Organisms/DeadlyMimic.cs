@@ -8,6 +8,7 @@ namespace Organisms
     public class DeadlyMimic : Plant
     {
         int life, size, positionX, positionY, growth;
+        string name;
         static int count = 0;
         /// ******************************************** Properties *********************************
         public override int Count
@@ -33,6 +34,10 @@ namespace Organisms
             get { return positionY; }
             set { positionY = value; }
         }
+        public override string Name
+        {
+            get { return name; }
+        }
         /// ******************************************** Methods ************************************
         public DeadlyMimic(int x, int y)
         {
@@ -42,6 +47,7 @@ namespace Organisms
             size = 0;
             PositionX = x;
             PositionY = y;
+            name = "DeadlyMimic";
         }   //Constructor
         public void Eat()
         {
@@ -59,6 +65,7 @@ namespace Organisms
                 size++;
             }
         }
+        public override MajesticPlant Pollinate() { return null; }
 
         ~DeadlyMimic()
         {

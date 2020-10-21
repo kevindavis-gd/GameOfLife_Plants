@@ -12,8 +12,13 @@ namespace GameofLife
         Actor[,] actors;
         Random rand;
         int deadlyCount, flyCount, majesticCount;
-        public List<Actor> Flies = new List<Actor>();
+        private List<Actor> flies = new List<Actor>();
         ///************************************************* Properties *******************************************
+        ///
+        public List<Actor> Flies
+        {
+            get { return flies; }
+        }
         public int DeadlyCount
         {
             get { return deadlyCount; }
@@ -32,7 +37,11 @@ namespace GameofLife
 
         public Actor[,] Actors
         {
-            get { return actors; }
+            get
+            {
+                //only get, no set
+                return actors;
+            }
         }
         ///************************************************* Methods ***************************************************
         public DataStructure()
@@ -40,6 +49,7 @@ namespace GameofLife
             rand = new Random();
         }//constructor
         ///************************************************* Fill 2D Array *******************************************
+
 
         public void Fill2DArray(int flyNum, int deadlyNum, int majesticNum, int gridSizeX, int gridSizeY)
         {
@@ -94,5 +104,18 @@ namespace GameofLife
                 temp = null;
             }
         }//RandomInsert
+
+        ///************************************************* Clear Flies List *******************************************
+
+        public void ClearFlies()
+        {
+            Flies.Clear();
+        }
+
+        public int FliesCount()
+        {
+            return Flies.Count;
+        }
+
     }
 }

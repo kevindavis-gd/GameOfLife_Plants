@@ -8,6 +8,7 @@ namespace Organisms
     public class Fly : Actor
     {
         int life, positionX, positionY;
+        string name;
         static int count = 0;
         /// ******************************************** Properties *********************************
         public override int Count
@@ -29,6 +30,14 @@ namespace Organisms
             get { return positionY; }
             set { positionY = value; }
         }
+        public override int Size
+        {
+            get;
+        }
+        public override string Name
+        {
+            get { return name; }
+        }
         /// ******************************************** Methods *********************************
         public Fly(int x, int y)
         {
@@ -37,8 +46,9 @@ namespace Organisms
             life = 5;
             PositionX = x;
             PositionY = y;
+            name = "Fly";
         }   //Constructor
-        public void Move()
+        public override void Move()
         {
             Random rand = new Random();
             int xpos, ypos;
@@ -57,8 +67,6 @@ namespace Organisms
             PositionX += xpos;
             PositionY += ypos;
 
-
-
             //if position X is negative, multiply by -1
             if (PositionX < 0)
             {
@@ -70,11 +78,14 @@ namespace Organisms
                 PositionY *= -1;
             }
         }//Move
-        public void Eat()
+        public override void Eat()
         {
             //if it gets food it can live for 5 generations
             life = 5;
         }//Eat
+
+        public override MajesticPlant Pollinate() { return null; }
+        public override void Grow() { }
         ~Fly()
         {
             --count;
