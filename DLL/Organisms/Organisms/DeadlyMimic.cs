@@ -49,7 +49,7 @@ namespace Organisms
             PositionY = y;
             name = "DeadlyMimic";
         }   //Constructor
-        public void Eat()
+        public override void Eat()
         {
             //if it gets food it can live for 5 generations
             //not compounded, it just resets, it is not added
@@ -69,7 +69,8 @@ namespace Organisms
 
         ~DeadlyMimic()
         {
-            --count;
+            count--;
+            Console.WriteLine("Mimic Died " + count);
         }//destructor
     }//DeadlyMimic 
 }

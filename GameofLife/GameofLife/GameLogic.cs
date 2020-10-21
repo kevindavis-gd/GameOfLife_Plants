@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows.Forms;
 using Organisms;
 
@@ -59,6 +60,7 @@ namespace GameofLife
                 {
                     //if organism is dead remove it from the 2D object array
                     DataArr.Actors[x, y] = null;
+                    System.GC.Collect();
                     return null;
                 }
                 //perform the grow action
@@ -81,7 +83,7 @@ namespace GameofLife
                     //static count
                     DataArr.MajesticCount = DataArr.Actors[x, y].Count;
                 }
-                else if (DataArr.Actors[x, y].Name == "DeadlyMimic")
+                if (DataArr.Actors[x, y].Name == "DeadlyMimic")
                 {
                     if (DataArr.Actors[x, y].Size < 1)
                     {
@@ -98,7 +100,7 @@ namespace GameofLife
                     //static count
                     DataArr.DeadlyCount = DataArr.Actors[x, y].Count;
                 }
-                else if (DataArr.Actors[x, y].Name == "Fly")
+                if (DataArr.Actors[x, y].Name == "Fly")
                 {
                     ret = GameofLife.Properties.Resources.Fly1;
                     //add each fly back into the fly List
@@ -115,6 +117,41 @@ namespace GameofLife
             }
             //return what ever ret is
             return ret;
+        }
+
+        public void updateCount()
+        {
+            DataArr.FlyCount = 0;
+            DataArr.MajesticCount = 0;
+            DataArr.DeadlyCount = 0;
+
+            bool fl = false;
+            bool de = false;
+            bool ma = false;
+
+            foreach ( var x in Data.Actors)
+            {
+                if(x != null && x.Name == "Fly")
+                {
+                    DataArr.FlyCount = x.Count;
+                    fl = true;
+                }
+
+                if (x != null && x.Name == "MajesticPlant")
+                {
+                    DataArr.MajesticCount = x.Count;
+                    ma = true;
+                }
+                if (x != null && x.Name == "DeadlyMimic")
+                {
+                    DataArr.DeadlyCount = x.Count;
+                    de = true;
+                }
+
+                if (fl && de && ma)
+                    break;
+            }
+
         }
 
 

@@ -91,6 +91,8 @@ namespace GameofLife
             Logic.MoveFlies(gridSizeX, gridSizeY);
             ScanAndUpdate();
             Gen++;
+
+            Logic.updateCount();
             //Display organism count
             label_DeadlyCount.Text = "Deadly Mimics Left: " + Logic.DataArr.DeadlyCount;
             label_FlyCount.Text = "Flys Left: " + Logic.DataArr.FlyCount;
@@ -98,6 +100,7 @@ namespace GameofLife
             label_genCount.Text = "Generation " + Gen + " of " + generations;
             if (!Logic.AutoRun)
             {
+               
                 timer_Game.Stop();
                 //increase speed to make button click feel quick
                 timer_Game.Interval = 20;
@@ -110,7 +113,11 @@ namespace GameofLife
             if (Gen >= generations)
             {
                 timer_Game.Stop();
-                MessageBox.Show("Max Generation Reached", "Max Gen");
+                MessageBox.Show("Max Generation Reached" + 
+                    "  Flies Left: " + Logic.DataArr.FlyCount +
+                    "  Deadly Mimics Left: " + Logic.DataArr.DeadlyCount +
+                    "  Majestic Plants Left: " + Logic.DataArr.MajesticCount,
+                    "Max Gen");
                 Application.Restart();
             } 
         }
@@ -122,6 +129,7 @@ namespace GameofLife
             {
                 for (int y = 0; y < NumOfCols; y++)
                 {
+                    System.GC.Collect();
                     //place anonymous picture box object in grid cells
                     grid[x, y] = new PictureBox
                     {   //set empty cells background color

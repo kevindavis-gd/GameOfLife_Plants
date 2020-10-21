@@ -5,7 +5,7 @@ using System.Drawing;
 
 namespace Organisms
 {
-    public class Fly : Actor
+    public class Fly : Actor, IInsect
     {
         int life, positionX, positionY;
         string name;
@@ -86,9 +86,43 @@ namespace Organisms
 
         public override MajesticPlant Pollinate() { return null; }
         public override void Grow() { }
+        
+        public void FlyAway()
+        {
+            Random rand = new Random();
+            int xpos, ypos;
+            //randomize, and if the number is 0, randomize again
+
+            //do while loop
+            do
+            {
+                xpos = rand.Next(-1, 4);
+            } while (xpos == 0);
+            //randomize, and if the number is 0, randomize again
+            do
+            {
+                ypos = rand.Next(-1, 4);
+            } while (ypos == 0);
+            PositionX += xpos;
+            PositionY += ypos;
+
+            //if position X is negative, multiply by -1
+            if (PositionX < 0)
+            {
+                PositionX *= -1;
+            }
+            //if position Y is negative, multiply by -1
+            if (PositionY < 0)
+            {
+                PositionY *= -1;
+            }
+
+        }//fly/teleport
+
         ~Fly()
         {
-            --count;
+            count--;
+            Console.WriteLine("Fly Died " + count);
         }//destructor
     }//Flies
 }
