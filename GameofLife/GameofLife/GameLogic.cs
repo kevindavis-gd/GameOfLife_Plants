@@ -62,15 +62,6 @@ namespace GameofLife
                     //if organism is dead remove it from the 2D object array
                     DataArr.Actors[x, y] = null;
                     System.GC.Collect();
-
-
-                    Console.WriteLine("life up");
-                    updateCount();
-
-
-
-
-
                     return null;
                 }
                 //perform the grow action
@@ -120,53 +111,18 @@ namespace GameofLife
                     
                     DataArr.FlyCount = DataArr.Actors[x, y].Count;
                 }
-                updateCount();
             }//if
             else
             {
                 //in position is null, set ret to null
                 ret = null;
-                updateCount();
             }
             System.GC.Collect();
             //return what ever ret is
             return ret;
         }
 
-        public void updateCount()
-        {
-            DataArr.FlyCount = 0;
-            DataArr.MajesticCount = 0;
-            DataArr.DeadlyCount = 0;
-
-            bool fl = false;
-            bool de = false;
-            bool ma = false;
-
-            foreach ( var x in Data.Actors)
-            {
-                if(x != null && x.Name == "Fly")
-                {
-                    DataArr.FlyCount = x.Count;
-                    fl = true;
-                }
-
-                if (x != null && x.Name == "MajesticPlant")
-                {
-                    DataArr.MajesticCount = x.Count;
-                    ma = true;
-                }
-                if (x != null && x.Name == "DeadlyMimic")
-                {
-                    DataArr.DeadlyCount = x.Count;
-                    de = true;
-                }
-
-                if (fl && de && ma)
-                    break;
-            }
-
-        }
+     
 
 
 

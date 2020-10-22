@@ -149,7 +149,7 @@ namespace GameofLife
         //*******************************************************Click Picture Boxes ****************************************
         private void MainForm_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("clicked", "clicked");
+            MessageBox.Show("Dont know how to do this", "clicked");
         }
 
         //*******************************************************Clear Grid ****************************************

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Organisms;
@@ -52,12 +53,11 @@ namespace GameofLife
             rand = new Random();
         }//constructor
 
-        public Actor GetActor(int x, int y)
+        
+        public Actor getActor(int x, int y)
         {
-            Actor temp = new;
-            actors[x, y]
+            return actors[x, y];
         }
-
 
         ///************************************************* Fill 2D Array *******************************************
 
