@@ -10,8 +10,8 @@ namespace GameofLife
         PictureBox[,] grid;
         DataStructure DataStructure = new DataStructure();
         GameLogic Logic = new GameLogic();
-        int Gen = 0;
-        
+        int Gen = 1;
+
 
         public MainForm() { InitializeComponent(); }
         private void MainForm_Load(object sender, EventArgs e)
@@ -26,7 +26,7 @@ namespace GameofLife
         }
         private void radioButton_Manual_CheckedChanged(object sender, EventArgs e)
         {
-            // requires button click to iterate
+            // game will require button click to iterate
             Logic.AutoRun = false;
         }
         private void button_Restart_Click(object sender, EventArgs e)
@@ -35,7 +35,6 @@ namespace GameofLife
         }
         private void LoadButton_click(object sender, EventArgs e)
         {
-            
             LoadDataButton.Visible = false;
             button_Restart.Visible = true;
             //load the data structure into the game logic
@@ -50,13 +49,13 @@ namespace GameofLife
                 gridSizeX = int.Parse(textBox_Rows.Text);
                 gridSizeY = int.Parse(textBox_Columns.Text);
                 generations = int.Parse(textBox_generationNum.Text);
-
+                //I didnt like the scroll bars with auto scroll so I limited it to size of form
                 if (gridSizeX > 15 || gridSizeY > 15)
-                   DefaultValues("Grid Size Exceeds Form, Replacing With Default Values");
+                    DefaultValues("Grid Size Exceeds Form, Replacing With Default Values");
                 //if there are too many organisms to fit on the board use default values
                 if ((deadlyNum + majesticNum + flyNum) > (gridSizeX * gridSizeY))
                     DefaultValues("Too Many Organisms, Replacing With Default Values");
-               
+
                 grid = new PictureBox[gridSizeX, gridSizeY];
             }//try
             catch (FormatException)
@@ -73,7 +72,6 @@ namespace GameofLife
             //fill a structure with requested actors
             Logic.DataArr.Fill2DArray(flyNum, deadlyNum, majesticNum, gridSizeX, gridSizeY);
             ScanAndUpdate();
-
             label_DeadlyCount.Text = "Deadly Mimics Left: " + Logic.DataArr.DeadlyCount;
             label_FlyCount.Text = "Flys Left: " + Logic.DataArr.FlyCount;
             label_MajesticCount.Text = "Majestic Plants Left: " + Logic.DataArr.MajesticCount;
@@ -90,17 +88,15 @@ namespace GameofLife
             ClearGrid(Color.Transparent);
             Logic.MoveFlies(gridSizeX, gridSizeY);
             ScanAndUpdate();
-            Gen++;
 
-            Logic.updateCount();
             //Display organism count
             label_DeadlyCount.Text = "Deadly Mimics Left: " + Logic.DataArr.DeadlyCount;
             label_FlyCount.Text = "Flys Left: " + Logic.DataArr.FlyCount;
             label_MajesticCount.Text = "Majestic Plant Left: " + Logic.DataArr.MajesticCount;
             label_genCount.Text = "Generation " + Gen + " of " + generations;
+
             if (!Logic.AutoRun)
             {
-               
                 timer_Game.Stop();
                 //increase speed to make button click feel quick
                 timer_Game.Interval = 20;
@@ -113,13 +109,17 @@ namespace GameofLife
             if (Gen >= generations)
             {
                 timer_Game.Stop();
-                MessageBox.Show("Max Generation Reached" + 
+                MessageBox.Show("Max Generation Reached" +
                     "  Flies Left: " + Logic.DataArr.FlyCount +
                     "  Deadly Mimics Left: " + Logic.DataArr.DeadlyCount +
                     "  Majestic Plants Left: " + Logic.DataArr.MajesticCount,
                     "Max Gen");
                 Application.Restart();
-            } 
+            }
+            Gen++;
+            //fly count will not update on first iteration, but will update correctly after
+            System.GC.Collect();
+            Console.WriteLine("DelFly");
         }
 
         //*******************************************************Load Empty Picture Grid ****************************************
@@ -129,7 +129,6 @@ namespace GameofLife
             {
                 for (int y = 0; y < NumOfCols; y++)
                 {
-                    System.GC.Collect();
                     //place anonymous picture box object in grid cells
                     grid[x, y] = new PictureBox
                     {   //set empty cells background color
@@ -139,17 +138,15 @@ namespace GameofLife
                         Size = new System.Drawing.Size(50, 50),
                         BorderStyle = BorderStyle.None,
                         Anchor = AnchorStyles.Left,
-                        
-
                     };//grid
                     grid[x, y].Click += MainForm_Click;
                     //add the picturebox object to this form
                     this.Controls.Add(grid[x, y]);
-
                 }//innerFor
             }//outerFor
         }//LoadPictureGrid
 
+        //*******************************************************Click Picture Boxes ****************************************
         private void MainForm_Click(object sender, EventArgs e)
         {
             MessageBox.Show("clicked", "clicked");
@@ -181,6 +178,7 @@ namespace GameofLife
                 for (int y = 0; y < gridSizeY; y++)
                 {
                     grid[x, y].Image = Logic.UpdateGrid(x, y, gridSizeX, gridSizeY);
+
                 }//innerFor
             }//outerFor
         }//ScanAndUpdate

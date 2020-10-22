@@ -17,7 +17,10 @@ namespace GameofLife
         ///
         public List<Actor> Flies
         {
-            get { return flies; }
+            get
+            {
+                return flies;
+            }
         }
         public int DeadlyCount
         {
@@ -48,6 +51,14 @@ namespace GameofLife
         {
             rand = new Random();
         }//constructor
+
+        public Actor GetActor(int x, int y)
+        {
+            Actor temp = new;
+            actors[x, y]
+        }
+
+
         ///************************************************* Fill 2D Array *******************************************
 
 

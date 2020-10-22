@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.Security.Cryptography.X509Certificates;
@@ -61,6 +62,15 @@ namespace GameofLife
                     //if organism is dead remove it from the 2D object array
                     DataArr.Actors[x, y] = null;
                     System.GC.Collect();
+
+
+                    Console.WriteLine("life up");
+                    updateCount();
+
+
+
+
+
                     return null;
                 }
                 //perform the grow action
@@ -98,6 +108,7 @@ namespace GameofLife
                         ret = GameofLife.Properties.Resources.DeadlyMimic3;
                     }
                     //static count
+                  
                     DataArr.DeadlyCount = DataArr.Actors[x, y].Count;
                 }
                 if (DataArr.Actors[x, y].Name == "Fly")
@@ -106,15 +117,18 @@ namespace GameofLife
                     //add each fly back into the fly List
                     DataArr.Flies.Add(DataArr.Actors[x, y]);
                     //static count
+                    
                     DataArr.FlyCount = DataArr.Actors[x, y].Count;
-                } 
+                }
+                updateCount();
             }//if
             else
             {
                 //in position is null, set ret to null
                 ret = null;
-                
+                updateCount();
             }
+            System.GC.Collect();
             //return what ever ret is
             return ret;
         }
@@ -215,7 +229,7 @@ namespace GameofLife
             //remove all the null items from the fly list
             Data.Flies.RemoveAll(item => item == null);
             System.GC.Collect();
-        }//Move
+            }//Move
 
     }//Class Data
 }
