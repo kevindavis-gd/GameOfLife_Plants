@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using Organisms;
 
 namespace GameofLife
@@ -53,11 +49,11 @@ namespace GameofLife
             rand = new Random();
         }//constructor
 
-        
-        public Actor getActor(int x, int y)
+        public DataStructure(int gridSizeX, int gridSizeY)
         {
-            return actors[x, y];
-        }
+            actors = new Actor[gridSizeX, gridSizeY];
+            rand = new Random();
+        }//constructor
 
         ///************************************************* Fill 2D Array *******************************************
 
@@ -88,6 +84,36 @@ namespace GameofLife
 
         }//Fill2DArray
 
+        //******************************** Load Single Actor from Picture Grid ********************
+        public void LoadSingleActorfromPictureGrid(string name, int x, int y, int gridSizeX, int gridSizeY )
+        {
+           
+
+            int a = 1;
+            
+            //int a = Int32.Parse(name);
+            if (name == "1")
+                a = 1;
+            if (name == "2")
+                a = 2;
+            if (name == "3")
+                a = 3;
+
+
+            switch (a)
+            {
+                case 1:
+                    Actors[x, y] = new Organisms.Fly(x, y);
+                    break;
+                case 2:
+                    Actors[x, y] = new Organisms.DeadlyMimic(x, y);
+                    break;
+                case 3:
+                    Actors[x, y] = new Organisms.MajesticPlant(x, y);
+                    break;
+            }
+        }
+
         ///************************************************* Add Plant *******************************************
         public void AddPlant(MajesticPlant child, int gridSizeX, int gridSizeY)
         {
@@ -115,18 +141,5 @@ namespace GameofLife
                 temp = null;
             }
         }//RandomInsert
-
-        ///************************************************* Clear Flies List *******************************************
-
-        public void ClearFlies()
-        {
-            Flies.Clear();
-        }
-
-        public int FliesCount()
-        {
-            return Flies.Count;
-        }
-
     }
 }

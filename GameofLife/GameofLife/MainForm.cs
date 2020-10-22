@@ -10,15 +10,16 @@ namespace GameofLife
         PictureBox[,] grid;
         DataStructure DataStructure = new DataStructure();
         GameLogic Logic = new GameLogic();
+        string ManualSelection = "1";
         int Gen = 1;
+        bool editForm = false;
 
 
         public MainForm() { InitializeComponent(); }
         private void MainForm_Load(object sender, EventArgs e)
         {
-            button_Next.Visible = false;
-            button_Restart.Visible = false;
         }
+        //*************************************************** Radio Buttons *******************************************
         private void radioButton_Auto_CheckedChanged(object sender, EventArgs e)
         {
             // let game run automatically
@@ -29,17 +30,53 @@ namespace GameofLife
             // game will require button click to iterate
             Logic.AutoRun = false;
         }
+
+        private void radioButton_ManualFly_CheckedChanged(object sender, EventArgs e)
+        {
+            ManualSelection = "1";
+        }
+
+        private void radioButton_ManualMimic_CheckedChanged(object sender, EventArgs e)
+        {
+            ManualSelection = "2";
+        }
+
+        private void radioButton_ManualDeadly_CheckedChanged(object sender, EventArgs e)
+        {
+            ManualSelection = "3";
+        }
+
+        //*************************************************** Normal Buttons *******************************************
         private void button_Restart_Click(object sender, EventArgs e)
         {
             Application.Restart();
         }
-        private void LoadButton_click(object sender, EventArgs e)
+
+
+        private void button_Next_Click(object sender, EventArgs e)
         {
-            LoadDataButton.Visible = false;
+            timer_Game.Start();
+        }//button_next_click
+         //*************************************************** Auto Load Button*******************************************
+
+        private void button_AutoLoad_Click(object sender, EventArgs e)
+        {
+
+            button_AutoLoad.Visible = false;
             button_Restart.Visible = true;
-            //load the data structure into the game logic
+            button_ContinueFromManualSelect.Visible = false;
+            button_ManualLoad.Visible = false;
+            button_Next.Visible = true;
+            label_DeadlyNums.Visible = true;
+            label_FlyNum.Visible = true;
+            label_MajesticNum.Visible = true;
+            label_MajesticNum.Visible = true;
+            textBox_DeadlyNum.Visible = true;
+            textBox_FlyNum.Visible = true;
+            textBox_MajesticNum.Visible = true;
+            groupBox_manualSelect.Visible = false;
+            editForm = false;
             Logic.LoadGameLogic(DataStructure);
-            //exception handling
             try
             {
                 button_Next.Visible = true;
@@ -63,7 +100,7 @@ namespace GameofLife
                 MessageBox.Show("Integers Only!", "Error");
                 Application.Restart();
             }//catch
-            //Show the Picture Grid
+             //Show the Picture Grid
             LoadEmptyPictureGrid(gridSizeX, gridSizeY);
             //change the color of empty cells
             ClearGrid(Color.Transparent);
@@ -76,15 +113,73 @@ namespace GameofLife
             label_FlyCount.Text = "Flys Left: " + Logic.DataArr.FlyCount;
             label_MajesticCount.Text = "Majestic Plants Left: " + Logic.DataArr.MajesticCount;
             label_genCount.Text = "Generation " + Gen + " of " + generations;
-        }//LoadButton_click
+        }//AutoLoadButton
 
-        private void button_Next_Click(object sender, EventArgs e)
+
+        //*************************************************** Manual Load Button *******************************************
+        private void button_ManualLoad_Click(object sender, EventArgs e)
         {
-            timer_Game.Start();
-        }//button_next_click
+            button_AutoLoad.Visible = false;
+            button_Restart.Visible = true;
+            button_ContinueFromManualSelect.Visible = true;
+            button_ManualLoad.Visible = false;
+            button_ManualLoad.Visible = true;
+            button_Next.Visible = false;
+            label_DeadlyNums.Visible = false;
+            label_FlyNum.Visible = false;
+            label_MajesticNum.Visible = false;
+            label_MajesticNum.Visible = false;
+            textBox_DeadlyNum.Visible = false;
+            textBox_FlyNum.Visible = false;
+            textBox_MajesticNum.Visible = false;
+            groupBox_manualSelect.Visible = true;
+            editForm = true;
+            try
+            {
+                gridSizeX = int.Parse(textBox_Rows.Text);
+                gridSizeY = int.Parse(textBox_Columns.Text);
+                generations = int.Parse(textBox_generationNum.Text);
+                //I didnt like the scroll bars with auto scroll so I limited it to size of form
+                if (gridSizeX > 15 || gridSizeY > 15)
+                    DefaultValues("Grid Size Exceeds Form, Replacing With Default Values");
+                //if there are too many organisms to fit on the board use default values
+                if ((deadlyNum + majesticNum + flyNum) > (gridSizeX * gridSizeY))
+                    DefaultValues("Too Many Organisms, Replacing With Default Values");
+                grid = new PictureBox[gridSizeX, gridSizeY];
+            }//try
+            catch (FormatException)
+            {
+                MessageBox.Show("Integers Only!", "Error");
+                Application.Restart();
+            }//catch
+            //Show the Picture Grid
+            LoadEmptyPictureGrid(gridSizeX, gridSizeY);
+            //change the color of empty cells
+            ClearGrid(Color.Transparent);
+            DataStructure = new DataStructure(gridSizeX, gridSizeY);
+        }//ManualLoad_Click
 
+        //*************************************************** Manual Continue Button *******************************************
+        private void button_ContinueFromManualSelect_Click(object sender, EventArgs e)
+        {
+            button_ContinueFromManualSelect.Visible = false;
+            button_Next.Visible = true;
+            button_ManualLoad.Visible = false;
+            editForm = false;
+            Logic.LoadGameLogic(DataStructure);
+            LoadFromGrid();
+            ClearGrid(Color.Transparent);
+            ScanAndUpdate();
+            label_DeadlyCount.Text = "Deadly Mimics Left: " + Logic.DataArr.DeadlyCount;
+            label_FlyCount.Text = "Flys Left: " + Logic.DataArr.FlyCount;
+            label_MajesticCount.Text = "Majestic Plants Left: " + Logic.DataArr.MajesticCount;
+            label_genCount.Text = "Generation " + Gen + " of " + generations;
+        }
+
+        //*************************************************** Game Timer *************************************************
         private void timer_Game_Tick(object sender, EventArgs e)
         {
+
             ClearGrid(Color.Transparent);
             Logic.MoveFlies(gridSizeX, gridSizeY);
             ScanAndUpdate();
@@ -106,6 +201,7 @@ namespace GameofLife
                 //reduce speed to view picture movement
                 timer_Game.Interval = 500;
             }
+
             if (Gen >= generations)
             {
                 timer_Game.Stop();
@@ -117,9 +213,8 @@ namespace GameofLife
                 Application.Restart();
             }
             Gen++;
-            //fly count will not update on first iteration, but will update correctly after
+            //fly count will not update on first iteration, but will update correctly afterwards
             System.GC.Collect();
-            Console.WriteLine("DelFly");
         }
 
         //*******************************************************Load Empty Picture Grid ****************************************
@@ -146,11 +241,50 @@ namespace GameofLife
             }//outerFor
         }//LoadPictureGrid
 
+
+
         //*******************************************************Click Picture Boxes ****************************************
         private void MainForm_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Dont know how to do this", "clicked");
+            if (editForm == true)
+            {
+                ((PictureBox)sender).Image = GameofLife.Properties.Resources.Fly1;
+
+                int a = Int32.Parse(ManualSelection);
+                switch (a)
+                {
+                    case 1:
+                        ((PictureBox)sender).Image = GameofLife.Properties.Resources.Fly1;
+                        ((PictureBox)sender).Name = ManualSelection.ToString();
+                        break;
+                    case 2:
+                        ((PictureBox)sender).Image = GameofLife.Properties.Resources.DeadlyMimic1;
+                        ((PictureBox)sender).Name = ManualSelection.ToString();
+                        break;
+                    case 3:
+                        ((PictureBox)sender).Image = GameofLife.Properties.Resources.MajesticPlant1;
+                        ((PictureBox)sender).Name = ManualSelection.ToString();
+                        break;
+                }
+            }
         }
+
+        //*******************************************************Load Actors from picture Grid******************************
+        public void LoadFromGrid()
+        {
+            for (int x = 0; x < gridSizeX; x++)
+            {
+                for (int y = 0; y < gridSizeY; y++)
+                {
+                    if (grid[x, y].Image != null)
+                    {
+                        Logic.DataArr.LoadSingleActorfromPictureGrid(grid[x, y].Name.ToString(), x, y, gridSizeX, gridSizeY);
+                    }
+
+                }//innerFor
+            }//outerFor
+        }
+
 
         //*******************************************************Clear Grid ****************************************
         //loop through entire picture array and set picture box image to null

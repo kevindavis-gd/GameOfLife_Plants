@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Security.Cryptography.X509Certificates;
-using System.Windows.Forms;
+﻿using System.Drawing;
 using Organisms;
 
 namespace GameofLife
@@ -29,9 +23,9 @@ namespace GameofLife
         {
         }//constructor
 
-        public void LoadGameLogic (DataStructure D)
+        public void LoadGameLogic(DataStructure D)
         {
-             Data = D;
+            Data = D;
         }
 
         ///************************************************* Reset Organism Count *******************************************
@@ -41,7 +35,7 @@ namespace GameofLife
             DataArr.FlyCount = 0;
             DataArr.MajesticCount = 0;
             DataArr.DeadlyCount = 0;
-           //delete every thing in the fly List
+            //delete every thing in the fly List
             DataArr.Flies.Clear();
         }
 
@@ -99,7 +93,7 @@ namespace GameofLife
                         ret = GameofLife.Properties.Resources.DeadlyMimic3;
                     }
                     //static count
-                  
+
                     DataArr.DeadlyCount = DataArr.Actors[x, y].Count;
                 }
                 if (DataArr.Actors[x, y].Name == "Fly")
@@ -108,7 +102,7 @@ namespace GameofLife
                     //add each fly back into the fly List
                     DataArr.Flies.Add(DataArr.Actors[x, y]);
                     //static count
-                    
+
                     DataArr.FlyCount = DataArr.Actors[x, y].Count;
                 }
             }//if
@@ -121,10 +115,6 @@ namespace GameofLife
             //return what ever ret is
             return ret;
         }
-
-     
-
-
 
         ///************************************************* Move Flies *******************************************
         public void MoveFlies(int gridSizeX, int gridSizeY)
@@ -185,7 +175,6 @@ namespace GameofLife
             //remove all the null items from the fly list
             Data.Flies.RemoveAll(item => item == null);
             System.GC.Collect();
-            }//Move
-
+        }//Move
+        }
     }//Class Data
-}
