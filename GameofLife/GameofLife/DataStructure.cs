@@ -1,4 +1,17 @@
-﻿using System;
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name: Kevin Davis 
+// Class : CMPS4143
+// Assignment: Program 5
+// Date: 10/23/2020
+//
+// Description :
+// To create a library (dll) of critters; to instantiate objects of classes in an inheritance hierarchy and 
+// polymorphically output each object’s attributes; to use static variables; to use a labels, text boxes and buttons;
+// to use the switch statement; to use exception handling; to use a data structure to hold references to objects.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+using System;
 using System.Collections.Generic;
 using Organisms;
 
@@ -87,19 +100,9 @@ namespace GameofLife
         //******************************** Load Single Actor from Picture Grid ********************
         public void LoadSingleActorfromPictureGrid(string name, int x, int y, int gridSizeX, int gridSizeY )
         {
-           
-
-            int a = 1;
             
-            //int a = Int32.Parse(name);
-            if (name == "1")
-                a = 1;
-            if (name == "2")
-                a = 2;
-            if (name == "3")
-                a = 3;
-
-
+           int a = int.Parse(name);
+           //switch
             switch (a)
             {
                 case 1:

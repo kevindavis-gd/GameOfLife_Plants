@@ -1,4 +1,16 @@
-﻿using System;
+﻿////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Name: Kevin Davis 
+// Class : CMPS4143
+// Assignment: Program 5
+// Date: 10/23/2020
+//
+// Description :
+// To create a library (dll) of critters; to instantiate objects of classes in an inheritance hierarchy and 
+// polymorphically output each object’s attributes; to use static variables; to use a labels, text boxes and buttons;
+// to use the switch statement; to use exception handling; to use a data structure to hold references to objects.
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -123,7 +135,7 @@ namespace GameofLife
             button_Restart.Visible = true;
             button_ContinueFromManualSelect.Visible = true;
             button_ManualLoad.Visible = false;
-            button_ManualLoad.Visible = true;
+            button_ManualLoad.Visible = false;
             button_Next.Visible = false;
             label_DeadlyNums.Visible = false;
             label_FlyNum.Visible = false;
