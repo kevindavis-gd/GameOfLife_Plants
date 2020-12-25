@@ -6,3 +6,5 @@
 ![GUI](Capture3.JPG)
 ![GUI](Capture4.JPG)
 ![GUI](Capture5.JPG)
+![GUI](Capture6.JPG)
+![GUI](Capture7.JPG)
